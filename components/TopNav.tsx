@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import { useActiveSection } from "@/lib/useActiveSection";
 import { useOnDark } from "@/lib/useOnDark";
@@ -14,8 +14,8 @@ const SECTIONS = [{ id: "home", label: "Home" }];
 
 const IDS = SECTIONS.map((i) => i.id);
 
-/** Roughly the middle of the pill, in CSS px from the top of the viewport. */
-const PROBE_Y = 72;
+/** Fallback until the pill has been measured, in CSS px from the top. */
+const PROBE_FALLBACK = 42;
 
 export default function TopNav() {
   const pathname = usePathname();
@@ -23,8 +23,26 @@ export default function TopNav() {
   const home = pathname === "/";
   const active = useActiveSection(IDS);
   const [scrolled, setScrolled] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+  // The probe has to sit in the middle of the pill. Measured rather than
+  // hard-coded: the pill's height moves with its padding, and a stale constant
+  // once had it sampling a card BELOW the nav — white ink over white page.
+  const [probeY, setProbeY] = useState(PROBE_FALLBACK);
   // the card art is the only dark thing on the page; ink flips over it
-  const dark = useOnDark(PROBE_Y);
+  const dark = useOnDark(probeY);
+
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+    const measure = () => {
+      const r = el.getBoundingClientRect();
+      setProbeY(r.top + r.height / 2);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -45,6 +63,7 @@ export default function TopNav() {
 
   return (
     <nav
+      ref={navRef}
       className={styles.nav}
       aria-label="Sections"
       data-scrolled={scrolled || undefined}

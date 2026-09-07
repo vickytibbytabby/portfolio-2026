@@ -358,9 +358,15 @@ deployed. Worth confirming your licence covers web use before going live.
 
 ## Behaviour notes
 
-- **Nav** is a pill centred at the top of the window. Unscrolled it's bare text;
-  past 24px of scroll it gains liquid glass — a blurred, saturated sample of
-  what's behind, a hairline rim and a bright inner top edge.
+- **Nav** is a pill centred 20px from the top of the window. Unscrolled it's
+  bare text; past 24px of scroll it gains liquid glass — a light blur of what's
+  behind, a hairline rim and a bright inner top edge. The blur is deliberately
+  thin (10px at 38% ground): heavier frosts over and stops reading as glass.
+
+  **Its luminance probe is measured, not hard-coded.** It has to sample the
+  middle of the pill, and the pill's height moves with its padding — a stale
+  constant once had it sampling a card *below* the nav, which put white ink on
+  white page and made two of the three items vanish on a phone.
 
   **Its ink follows the actual background luminance.** "Is a card behind it?"
   isn't good enough: the backgrounds are gradients, and UCLA's runs from deep
@@ -462,6 +468,13 @@ deployed. Worth confirming your licence covers web use before going live.
   - A video has to round to even pixels, so its intrinsic ratio lands a hair off
     the still's — 1px of difference in the rendered height. `.framedShot` fixes
     `aspect-ratio: 856 / 1778` so both boxes are identical at every width.
+
+  **Switching is animated in two parts.** The white pill slides along the row to
+  the tab you picked — it's its own element with a measured position rather than
+  a background on the active button, which is what lets it travel — and the
+  panel under it leaves and arrives in the direction you moved. Both halves are
+  keyed on the tab index so React remounts them and the entry animation runs
+  every time.
 
   **The row and the panel are sized to land inside one 14" fold together.** The
   frame leaves 73px between them and sets the tabs at 24px; that plus the
