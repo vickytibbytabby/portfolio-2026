@@ -3,6 +3,7 @@ import styles from "./Contact.module.css";
 
 const EMAIL = "vickyyjen@gmail.com";
 
+/** The resume is a download; the rest open. */
 const LINKS = [
   { label: "Email", href: `mailto:${EMAIL}` },
   { label: "Resume", href: "/resume.pdf" },
@@ -30,6 +31,7 @@ export default function Contact() {
               className={styles.link}
               href={link.href}
               {...(external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
+              {...(link.href.endsWith(".pdf") ? { download: "" } : {})}
             >
               {link.label}
             </a>

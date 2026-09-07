@@ -1,5 +1,6 @@
 import styles from "./SiteFooter.module.css";
 
+/** The resume is a download; the rest open. */
 const LINKS = [
   { label: "Email", href: "mailto:vickyyjen@gmail.com" },
   { label: "Resume", href: "/resume.pdf" },
@@ -25,6 +26,7 @@ export default function SiteFooter() {
               {...(l.href.startsWith("http")
                 ? { target: "_blank", rel: "noreferrer noopener" }
                 : {})}
+              {...(l.href.endsWith(".pdf") ? { download: "" } : {})}
             >
               {l.label}
             </a>
