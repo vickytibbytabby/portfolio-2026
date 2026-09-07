@@ -879,15 +879,16 @@
     gap: clamp(16px, 4vw, 24px);
   }
 
-  /* the tab row scrolls sideways rather than wrapping */
+  /* The four tabs have to fit the width — they were running off the right of a
+     390px screen. Small type and tight padding gets all four in; the sideways
+     scroll stays as a backstop for a narrower phone. */
   .tabs {
     display: flex;
-    align-self: stretch;
-    width: 100%;
+    align-self: center;
     max-width: 100%;
-    gap: 6px;
-    padding: 6px;
-    font-size: clamp(14px, 3.6vw, 16px);
+    gap: 2px;
+    padding: 4px;
+    font-size: clamp(11px, 3vw, 13px);
     overflow-x: auto;
     scrollbar-width: none;
   }
@@ -896,12 +897,14 @@
     display: none;
   }
 
+  .tab,
   .tabOn {
-    padding: 10px 16px;
+    padding: 8px 9px;
   }
 
-  .tab {
-    padding: 10px 14px;
+  .tabPill {
+    top: 4px;
+    height: calc(100% - 8px);
   }
 
   /* the two halves stay side by side; they just get tighter */
@@ -921,11 +924,17 @@
     font-size: clamp(15px, 3.8vw, 18px);
   }
 
+  /* One box for every phone on the page. The three sources have slightly
+     different intrinsic ratios — a bare screen recording, an old chassis
+     composite and the new chassis — so the ratio is pinned and the art is
+     contained inside it rather than setting the height itself. */
   .beforeShot,
   .afterShot,
   .framedShot {
     height: auto;
     width: 92%;
+    aspect-ratio: 856 / 1778;
+    object-fit: contain;
   }
 
   .afterShot {
@@ -995,6 +1004,26 @@
   .protoPanel,
   .solutionPanel {
     border-radius: 12px;
+  }
+
+  /* The solution panel keeps the frame's landscape ratio, which on a phone
+     column leaves the mockup about 180px tall — too small to read. Here it
+     drops the ratio and lets the phone set the height instead. */
+  .solutionPanel {
+    aspect-ratio: auto;
+    display: flex;
+    justify-content: center;
+    padding: clamp(16px, 4.5vw, 26px) 0;
+  }
+
+  .solutionShot {
+    position: static;
+    left: auto;
+    top: auto;
+    height: auto;
+    width: min(72%, 300px);
+    translate: none;
+    border-radius: 7vw / 3.4vw;
   }
 
   .next {

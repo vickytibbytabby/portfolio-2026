@@ -438,10 +438,16 @@ deployed. Worth confirming your licence covers web use before going live.
   so they all collapse into the same point rather than shrinking where they
   stand.
 
-  Phones can't hover, so the shot rocks gently and says *tap here* — both stop
-  the moment it opens. And the photos there live in a `0fr`/`1fr` grid row
-  rather than merely being hidden, so a closed scatter takes no room at all
-  instead of leaving a hole in the page.
+  Every few seconds the shot rocks and a small label appears under it — *tap
+  here* on touch, *hover me* with a mouse — then both go quiet again. It's a cue
+  that comes and goes rather than a label parked under the picture, and it stops
+  entirely once the scatter is open. The `[Untitled]` folder on the homepage
+  carries the same cue: the two folder panels take the same translate, so the
+  paper line they're cut along stays registered while it hops.
+
+  The photos there live in a `0fr`/`1fr` grid row rather than merely being
+  hidden, so a closed scatter takes no room at all instead of leaving a hole in
+  the page.
 - **The project tabs on the case study actually switch.** `ProjectTabs.tsx` owns
   the state; each tab carries its own before/after panel and write-up. Every tab
   is a real button — a tab you can't press is worse than no tab — and the ones

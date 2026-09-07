@@ -47,7 +47,7 @@ export default function FoodScatter({ food }: { food: Food[] }) {
         {...hover}
       >
         <img className={styles.insta} src="/story/insta.webp" alt="The scallion.studios Instagram profile" />
-        {coarse && <span className={styles.hint}>tap here</span>}
+        <span className={styles.hint}>{coarse ? "tap here" : "hover me"}</span>
       </button>
 
       {/* On phones this collapses to nothing when closed, so there's no gap

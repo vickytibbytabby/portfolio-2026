@@ -71,6 +71,74 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Every few seconds the folder gives a small hop and says what to do, then both
+   go quiet again. The back and front panels take the same translate, so the
+   paper line they're cut along stays registered. */
+@keyframes folderCue {
+  0%,
+  70%,
+  100% {
+    translate: 0 0;
+  }
+  78% {
+    translate: 0 -7%;
+  }
+  86% {
+    translate: 0 0;
+  }
+  92% {
+    translate: 0 -3%;
+  }
+}
+
+@keyframes cueIn {
+  0%,
+  66%,
+  100% {
+    opacity: 0;
+  }
+  74%,
+  92% {
+    opacity: 1;
+  }
+}
+
+.layer:not([data-open]) .folderBack,
+.layer:not([data-open]) .folderFront,
+.layer:not([data-open]) .label {
+  animation: folderCue 6s var(--ease) infinite;
+}
+
+.cue {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 1.9em);
+  translate: -50% 0;
+  font-family: var(--grotesque);
+  font-weight: 500;
+  font-size: calc(13 * var(--u));
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.34);
+  opacity: 0;
+  pointer-events: none;
+  animation: cueIn 6s var(--ease) infinite;
+}
+
+.layer[data-open] .cue {
+  animation: none;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer:not([data-open]) .folderBack,
+  .layer:not([data-open]) .folderFront,
+  .layer:not([data-open]) .label,
+  .cue {
+    animation: none;
+  }
+}
+
 .label {
   position: absolute;
   left: 50%;
@@ -95,6 +163,11 @@
   .label {
     /* --u is sub-pixel on a phone, so the frame-unit gap would vanish */
     margin-top: 6px;
+  }
+
+  .cue {
+    font-size: 12px;
+    top: calc(100% + 2.2em);
   }
 
   /* the spilled photos carry filenames and sit close together, so they stay

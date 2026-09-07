@@ -83,7 +83,7 @@ export default function FolderCollage() {
     : { onMouseEnter: () => setOpen(true), onMouseLeave: () => setOpen(false) };
 
   return (
-    <div className={styles.layer} ref={layerRef}>
+    <div className={styles.layer} ref={layerRef} data-open={open || undefined}>
       {/* back of the folder */}
       <img
         className={styles.folderBack}
@@ -189,6 +189,8 @@ export default function FolderCollage() {
         {...hoverProps}
       >
         <span className={styles.label}>[Untitled]</span>
+        {/* a cue that comes and goes, rather than a label parked under the art */}
+        <span className={styles.cue}>{coarse ? "tap here" : "hover me"}</span>
       </button>
     </div>
   );

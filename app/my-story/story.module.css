@@ -107,6 +107,22 @@
   scale: 1.015;
 }
 
+/* the ambient cue, on any pointer — it invites the hover as well as the tap */
+.scatter:not([data-open]) .instaButton {
+  animation: hintRock 6s var(--ease) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scatter:not([data-open]) .instaButton {
+    animation: none;
+  }
+
+  .hint {
+    opacity: 1;
+    animation: none;
+  }
+}
+
 .insta {
   display: block;
   width: 100%;
@@ -116,8 +132,9 @@
   box-shadow: 0 calc(4 * var(--pu)) calc(4 * var(--pu)) rgba(0, 0, 0, 0.15);
 }
 
-/* Touch has no hover, so the shot rocks very slightly and says so. Both stop
-   the moment it's been opened. */
+/* The shot rocks every few seconds and says what to do as it does — a cue that
+   comes and goes rather than a label parked under the picture. Both stop the
+   moment it's open. */
 .hint {
   position: absolute;
   left: 50%;
@@ -128,17 +145,21 @@
   font-size: 12px;
   letter-spacing: 0.04em;
   white-space: nowrap;
-  color: rgba(0, 0, 0, 0.32);
-  animation: hintPulse 2.8s var(--ease) infinite;
+  color: rgba(0, 0, 0, 0.34);
+  opacity: 0;
+  animation: hintCue 6s var(--ease) infinite;
 }
 
-@keyframes hintPulse {
+/* dark for most of the cycle, so it reads as a nudge and not as furniture */
+@keyframes hintCue {
   0%,
+  66%,
   100% {
-    opacity: 0.45;
+    opacity: 0;
   }
-  50% {
-    opacity: 0.9;
+  74%,
+  92% {
+    opacity: 1;
   }
 }
 
@@ -148,11 +169,14 @@
   100% {
     rotate: -1.54deg;
   }
-  80% {
-    rotate: -3.6deg;
+  78% {
+    rotate: -3.8deg;
   }
-  90% {
-    rotate: 0.4deg;
+  86% {
+    rotate: 0.6deg;
+  }
+  93% {
+    rotate: -2.4deg;
   }
 }
 
@@ -411,12 +435,7 @@
     rotate: calc(var(--tilt) * 1deg);
   }
 
-  /* no hover to invite the tap with, so the shot rocks a little on its own */
-  @media (hover: none) {
-    .scatter:not([data-open]) .instaButton {
-      animation: hintRock 4.5s var(--ease) infinite;
-    }
-  }
+
 
   .principlesTitle {
     margin-top: clamp(48px, 12vw, 80px);
