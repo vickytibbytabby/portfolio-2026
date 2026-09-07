@@ -228,6 +228,18 @@ the art and flush to its bottom.
 
 ## Sub-pages
 
+**UCLA Football** (`/work/ucla-football`, Figma 112:128) closes the chain: a
+gradient hero running UCLA blue down to LA sunset gold with the poster and its
+letter, the lede, three facts, the line-drawn map in a panel, the colour studies
+and the final deliverable. Its next link goes to My story rather than another
+project.
+
+The frame shows the hero art through an inner crop (224% wide, offset -62.83% /
+-26.34%), so the export is composited to that crop at 2x rather than reproduced
+with nested overflow boxes. The map illustration is not in the design context
+response at all — that node has no image fill — so it comes from a node
+screenshot instead.
+
 **Airbnb** (`/work/airbnb`) is a port, not a new design: Vicky's earlier Framer
 write-up translated into this site's case-study format — the same 1512 frame,
 the same `--pu` unit, the same label-left / content-right rows, and this site's

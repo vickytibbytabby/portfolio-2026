@@ -218,13 +218,6 @@ export default function AirbnbCase() {
                 to vet a neighbourhood, and <strong>spontaneous users</strong>, who book on
                 instinct and find out where they are on arrival.
               </p>
-              <ul className={styles.faces}>
-                {[1, 2, 3, 4].map((i) => (
-                  <li key={i}>
-                    <img src={`/case/airbnb/face-${i}.webp`} alt="" />
-                  </li>
-                ))}
-              </ul>
               <div className={styles.quotes}>
                 {QUOTES.map((q) => (
                   <blockquote key={q.q}>
@@ -419,7 +412,7 @@ export default function AirbnbCase() {
         </div>
 
         {/* ---- next ---- */}
-        <Link href="/#works" className={styles.next} data-reveal="">
+        <Link href="/work/ucla-football" className={styles.next} data-reveal="">
           <span className={styles.nextThumb}>
             <img src="/work-cards/ucla-football-bg.webp" alt="" />
             <img className={styles.nextShot} src="/work-cards/ucla-football-art.webp" alt="" />

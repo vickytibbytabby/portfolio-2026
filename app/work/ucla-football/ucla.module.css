@@ -1,0 +1,262 @@
+/* Figma 112:128 — the same 1512 frame and --pu unit as the other case studies. */
+.page {
+  --t: 0.81;
+  width: calc(1512 * var(--pu));
+  margin-inline: auto;
+}
+
+/* ---- hero -------------------------------------------------------------- */
+
+/* The frame's gradient runs UCLA blue down to LA sunset gold. */
+.hero {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    #001a4b 0%,
+    #0f6fd4 38.462%,
+    #b6b6b6 65.634%,
+    #e0c27b 84.559%,
+    #f3ad02 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 761.928 x 867.542 of the 987.49 frame — the art already carries its own crop */
+.poster {
+  width: calc(761.928 * var(--pu));
+  max-width: 74%;
+  height: auto;
+  max-height: 88svh;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---- lede -------------------------------------------------------------- */
+
+.lede {
+  width: calc(1000 * var(--pu));
+  margin: calc(110.43 * var(--pu)) auto 0;
+  font-size: calc(40 * var(--t) * var(--pu));
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* ---- facts ------------------------------------------------------------- */
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: calc(60 * var(--pu));
+  padding: calc(20 * var(--pu)) calc(200 * var(--pu));
+  margin-top: calc(40 * var(--pu));
+}
+
+.fact {
+  display: flex;
+  gap: calc(20 * var(--pu));
+  font-size: calc(24 * var(--t) * var(--pu));
+  line-height: 1.35;
+}
+
+.fact dt {
+  flex: none;
+  width: calc(427.259 * var(--pu));
+  font-family: var(--hand);
+  opacity: 0.5;
+}
+
+.fact dd {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+/* ---- the illustration -------------------------------------------------- */
+
+.showcase {
+  display: flex;
+  justify-content: center;
+  margin-top: calc(40 * var(--pu));
+}
+
+/* 1389.018 x 962.141 in the frame; the height is capped to what a 14" fold
+   leaves, the same trade the other case studies make. */
+.panel {
+  width: calc(1389.018 * var(--pu));
+  max-width: 100%;
+  height: min(calc(962.141 * var(--pu)), calc(100svh - 180px));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(20 * var(--pu));
+  background: #f3f3f3;
+}
+
+.map {
+  height: 89.7%;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---- body -------------------------------------------------------------- */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: calc(60 * var(--pu));
+  padding: calc(20 * var(--pu)) calc(200 * var(--pu));
+  margin-top: calc(40 * var(--pu));
+}
+
+.row {
+  display: flex;
+  gap: calc(20 * var(--pu));
+  width: 100%;
+}
+
+.label {
+  flex: none;
+  width: calc(427.259 * var(--pu));
+  font-family: var(--hand);
+  font-weight: 400;
+  font-size: calc(24 * var(--t) * var(--pu));
+  line-height: 1.25;
+  opacity: 0.5;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--pu));
+  font-size: calc(24 * var(--t) * var(--pu));
+  line-height: 1.35;
+}
+
+.content p {
+  margin: 0;
+}
+
+.figure {
+  width: 100%;
+  height: auto;
+  border-radius: calc(20 * var(--pu));
+  display: block;
+}
+
+/* ---- next -------------------------------------------------------------- */
+
+.next {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: calc(32 * var(--pu));
+  margin: calc(208 * var(--pu)) auto calc(124 * var(--pu));
+  font-family: var(--hand);
+  font-size: calc(32 * var(--t) * var(--pu));
+  line-height: 1.25;
+}
+
+.nextArrow {
+  width: calc(53.657 * var(--pu));
+  height: calc(22.963 * var(--pu));
+  flex: none;
+  transition: translate 240ms var(--ease);
+}
+
+.next:hover .nextArrow {
+  translate: calc(8 * var(--pu)) 0;
+}
+
+/* ---- phones ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .page {
+    width: 100%;
+  }
+
+  .hero {
+    height: 62svh;
+    min-height: 340px;
+  }
+
+  .poster {
+    width: 74%;
+    max-width: none;
+    max-height: 82%;
+  }
+
+  .lede {
+    width: auto;
+    margin-top: clamp(36px, 9vw, 56px);
+    padding-inline: var(--gutter);
+    font-size: clamp(21px, 5.4vw, 28px);
+  }
+
+  .facts,
+  .body {
+    gap: clamp(24px, 6vw, 36px);
+    padding: 0 var(--gutter);
+    margin-top: clamp(36px, 9vw, 56px);
+  }
+
+  /* the label column can't hold beside the body at this width */
+  .fact,
+  .row {
+    flex-direction: column;
+    gap: 8px;
+    font-size: clamp(16px, 4.2vw, 19px);
+  }
+
+  .fact dt,
+  .label {
+    width: auto;
+    font-size: clamp(17px, 4.4vw, 20px);
+  }
+
+  .content {
+    gap: clamp(14px, 3.6vw, 20px);
+    font-size: clamp(16px, 4.2vw, 19px);
+  }
+
+  .showcase {
+    margin-top: clamp(36px, 9vw, 56px);
+    padding-inline: var(--gutter);
+  }
+
+  /* --pu is a quarter of a pixel here, so the frame-unit box would collapse */
+  .panel {
+    width: 100%;
+    height: auto;
+    padding: clamp(14px, 4vw, 22px);
+    border-radius: 12px;
+  }
+
+  .map {
+    height: auto;
+    width: 100%;
+  }
+
+  .figure {
+    border-radius: 10px;
+  }
+
+  .next {
+    gap: 14px;
+    margin: clamp(48px, 12vw, 80px) auto clamp(48px, 12vw, 80px);
+    padding-inline: var(--gutter);
+    font-size: clamp(17px, 4.3vw, 21px);
+  }
+
+  .nextArrow {
+    width: 30px;
+    height: 13px;
+  }
+}

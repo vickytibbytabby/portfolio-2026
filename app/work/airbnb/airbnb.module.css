@@ -233,27 +233,6 @@
   color: var(--muted);
 }
 
-.faces {
-  display: flex;
-  gap: calc(-8 * var(--pu));
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.faces li + li {
-  margin-left: calc(-18 * var(--pu));
-}
-
-.faces img {
-  width: calc(72 * var(--pu));
-  height: calc(72 * var(--pu));
-  border-radius: 50%;
-  object-fit: cover;
-  border: calc(3 * var(--pu)) solid var(--bg);
-  display: block;
-}
-
 .quotes {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -543,16 +522,6 @@
 
   .stats strong {
     font-size: clamp(36px, 9vw, 46px);
-  }
-
-  .faces img {
-    width: 52px;
-    height: 52px;
-    border-width: 2px;
-  }
-
-  .faces li + li {
-    margin-left: -12px;
   }
 
   .figure,
