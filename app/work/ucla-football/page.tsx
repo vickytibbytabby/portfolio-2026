@@ -52,9 +52,21 @@ export default function UclaFootballCase() {
         </dl>
 
         {/* ---- the illustration ---- */}
-        <section className={styles.showcase} data-reveal="" aria-label="The illustrated map">
+        <section className={styles.showcase} data-reveal="" aria-label="Drawing the map">
           <div className={styles.panel}>
-            <img className={styles.map} src="/case/ucla/map.webp" alt="The line-drawn map of Los Angeles" />
+            {/* the recording is square with black bars down each side; it's
+                cropped to the drawing itself */}
+            <video
+              className={styles.map}
+              src="/case/ucla/timelapse.mp4"
+              poster="/case/ucla/timelapse-poster.webp"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="A time-lapse of the map being drawn"
+            />
           </div>
         </section>
 
