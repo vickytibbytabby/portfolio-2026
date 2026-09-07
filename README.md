@@ -436,6 +436,19 @@ deployed. Worth confirming your licence covers web use before going live.
   the moment it opens. And the photos there live in a `0fr`/`1fr` grid row
   rather than merely being hidden, so a closed scatter takes no room at all
   instead of leaving a hole in the page.
+- **The project tabs on the case study actually switch.** `ProjectTabs.tsx` owns
+  the state; each tab carries its own before/after panel and write-up. Every tab
+  is a real button — a tab you can't press is worse than no tab — and the ones
+  with nothing behind them yet (Slab Packs, Offers, Showrooms) land on a shared
+  *Case Study Coming Soon* empty state rather than a dead end. Slab Packs has
+  its before/after pair; the other two are the empty state alone.
+
+  Both shots in a pair wear one class (`.slabShot`), so they cannot end up at
+  different sizes.
+
+  This is what forced the MutationObserver in `ScrollReveal.tsx`: a tab swap
+  mounts a whole panel of `data-reveal` blocks after that component's effect has
+  run, and unobserved blocks stay invisible for good under the hiding rule.
 - **The case study's lede reads itself.** Its words start grey and turn black as
   you scroll through them, like a karaoke line — `app/work/arena-club/Lede.tsx`.
   Progress comes from where the paragraph sits in the window (lighting from 82%

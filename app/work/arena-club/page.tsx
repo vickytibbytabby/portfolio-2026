@@ -3,6 +3,7 @@ import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import BackLink from "./BackLink";
 import Lede from "./Lede";
+import ProjectTabs from "./ProjectTabs";
 import styles from "./case.module.css";
 
 export const metadata: Metadata = {
@@ -19,7 +20,62 @@ const TOOLS = [
   { src: "/case/arena/tool-cursor.webp", name: "Cursor" },
 ];
 
-const TABS = ["Homepage", "Slab Packs®", "Offers", "Showrooms"];
+/** The homepage: the old app beside the recording of the redesign. */
+function HomepagePanel() {
+  return (
+    <section className={styles.compare} aria-label="Before and after">
+      <div className={styles.compareCol}>
+        <p className={styles.compareLabel}>Before</p>
+        <video
+          className={styles.beforeShot}
+          src="/case/arena/before.mp4"
+          poster="/case/arena/before-poster.webp"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label="The Arena Club homepage before the redesign"
+        />
+      </div>
+      <div className={styles.compareCol}>
+        <p className={styles.compareLabel}>After</p>
+        <HomeVideo className={styles.afterShot} />
+      </div>
+    </section>
+  );
+}
+
+/** Slab Packs: the live marketing page beside the redesigned in-app flow. Both
+ *  wear the same class, so they can't drift apart in size. */
+function SlabPanel() {
+  return (
+    <section className={styles.compare} aria-label="Before and after">
+      <div className={styles.compareCol}>
+        <p className={styles.compareLabel}>Before</p>
+        <img
+          className={styles.slabShot}
+          src="/case/arena/slab-before.webp"
+          alt="The Slab Packs page before the redesign"
+        />
+      </div>
+      <div className={styles.compareCol}>
+        <p className={styles.compareLabel}>After</p>
+        <video
+          className={styles.slabShot}
+          src="/case/arena/slab-after.mp4"
+          poster="/case/arena/slab-after-poster.webp"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label="The redesigned Slab Packs flow"
+        />
+      </div>
+    </section>
+  );
+}
 
 /** The homepage recording, reused wherever the design showed its still. */
 function HomeVideo({ className }: { className: string }) {
@@ -36,6 +92,186 @@ function HomeVideo({ className }: { className: string }) {
         aria-label="The redesigned Arena Club homepage"
       />
     </div>
+  );
+}
+
+/** The homepage write-up: everything under the before/after panel. */
+function HomepageBody() {
+  return (
+    <>
+        <section className={styles.row} data-reveal="">
+          <h2 className={styles.label}>The problem</h2>
+          <div className={styles.content}>
+            <h3>Arena Club is growing beyond sports/pokémon trading cards.</h3>
+            <p>
+              Arena Club is expanding into watches, coins, wine, and other collectibles.
+              As the marketplace grows, our users&rsquo; interests become increasingly
+              different.
+            </p>
+            <p>
+              But our homepage still largely shows everyone the same repeated content
+              that already exists elsewhere in the product.
+            </p>
+            <p>
+              Experienced collectors often skip Home entirely and go straight to Packs,
+              where they can find the same content with less scrolling.
+            </p>
+          </div>
+        </section>
+
+        <section className={styles.row} data-reveal="">
+          <h2 className={styles.label}>Current data</h2>
+          <div className={styles.content}>
+            <h3>So... what should Home actually be for?</h3>
+            <p>
+              Looking at the existing homepage, In the first two pack sections, only 15%
+              of users who click successfully convert and purchase a pack.
+            </p>
+            <p>
+              The Buy Again section gets a fraction of those clicks, yet 50% convert.{" "}
+              <strong>Which is 3× better conversion per click.</strong>
+            </p>
+            <div className={styles.figureCrop}>
+              <img src="/case/arena/buyagain.webp" alt="The existing homepage next to the Buy Again section" />
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.row} data-reveal="">
+          <div className={styles.labelStack}>
+            <h2 className={styles.label}>User testing process</h2>
+            <div className={styles.labelTools}>
+              <img className={styles.toolTilt} src="/case/arena/tool-claude.webp" alt="Claude" />
+              <img className={styles.toolTiltB} src="/case/arena/tool-cursor.webp" alt="Cursor" />
+            </div>
+          </div>
+          <div className={styles.content}>
+            <h3>
+              Instead of asking users what they want, I gave them a functional prototype
+              to use and play with.
+            </h3>
+            <p>
+              I built a V1 of a redesigned homepage with Claude code and published it to
+              vercel to give a select cohort of users acces
+            </p>
+            <div className={styles.protoPanel}>
+              <img className={styles.protoA} src="/case/arena/proto-a.webp" alt="" />
+              <img className={styles.protoB} src="/case/arena/proto-b.webp" alt="" />
+              <img className={styles.protoC} src="/case/arena/proto-c.webp" alt="" />
+            </div>
+            <p>
+              I sent it to 45 Arena Club users and track every major interaction, what
+              they click, what they ignore, and how they move through the page.
+            </p>
+            <p>
+              The experience ends with a survey, followed by 11 user interviews to
+              understand the behavior I&rsquo;m seeing.
+            </p>
+          </div>
+        </section>
+
+        <section className={styles.row} data-reveal="">
+          <h2 className={styles.label}>Software Sidequest</h2>
+          <div className={styles.content}>
+            <p>
+              To track and analyze these events and data, I used my user research log
+              tool, also built fully with claude code, which I have been using to track
+              and keep all my research and insights in one place.
+            </p>
+            <img className={styles.figure} src="/case/arena/log-1.webp" alt="The research log tool" />
+            <img className={styles.figure} src="/case/arena/log-2.webp" alt="Interview transcripts and affinity mapping" />
+          </div>
+        </section>
+
+        <section className={styles.row} data-reveal="">
+          <h2 className={styles.label}>What I learned</h2>
+          <div className={styles.content}>
+            <h3>Home doesn&rsquo;t need more content. It needs more relevance.</h3>
+            <p>Users don&rsquo;t need another place to browse the same inventory.</p>
+            <p>
+              What they want is an easier way to keep up with the things they already
+              care about.
+            </p>
+            <p>
+              Today, watchlists, offers, and auctions are spread across the product.
+              Some collectors even rely on phone alarms, spreadsheets, and bookmarked
+              filters to keep track.
+            </p>
+            <p>
+              The research surfaces opportunities like saved searches, favorite packs,
+              watchlist price changes, auctions ending soon, new listings, and active
+              auctions.
+            </p>
+            <h3>
+              Home can understand what I care about, what needs my attention, and what I
+              might want next.
+            </h3>
+          </div>
+        </section>
+
+        <section className={styles.row} data-reveal="">
+          <h2 className={styles.label}>Biggest challenge</h2>
+          <div className={styles.content}>
+            <h3>How do I show more without making Home feel overwhelming?</h3>
+            <p>
+              Once I knew what belonged on Home, the challenge became fitting it all
+              together. More sections created more opportunities for discovery, but they
+              also created more noise.
+            </p>
+            <p>
+              I designed the first version around an MVP that could start learning what
+              each collector cared about and eventually power deeper personalization. At
+              the same time, I stripped back repetitive UI, unnecessary copy, and
+              competing actions so the collectibles themselves could do more of the work.
+            </p>
+            <p>
+              The goal wasn&rsquo;t to show everything. It was to learn what was worth
+              showing each user.
+            </p>
+          </div>
+        </section>
+
+        <section className={styles.row} data-reveal="">
+          <h2 className={styles.label}>The solution</h2>
+          <div className={styles.content}>
+            <h3>
+              A homepage built around the collector.
+              <br />
+              What&rsquo;s yours &rarr; What&rsquo;s changed &rarr; What&rsquo;s new
+            </h3>
+            <div className={styles.solutionPanel}>
+              <HomeVideo className={styles.solutionShot} />
+            </div>
+            <div className={styles.steps}>
+              <p>
+                01 / Pick up where you left off
+                <br />
+                <span>&nbsp;Bring time-sensitive activity like auctions and watchlist changes forward.</span>
+              </p>
+              <p>
+                02 / Built around your interests
+                <br />
+                <span>&nbsp;Shape Home around the categories and collectibles each user cares about.</span>
+              </p>
+              <p>
+                03 / Make discovery relevant
+                <br />
+                <span>&nbsp;Keep new inventory discoverable without making it the entire purpose of Home.</span>
+              </p>
+              <p>
+                04 / Built to grow
+                <br />
+                <span>&nbsp;Add new categories without turning Home into an increasingly long, generic feed.</span>
+              </p>
+              <p>
+                The research doesn&rsquo;t just tell us which sections to add. It gives
+                Home a reason to exist and role in the user&rsquo;s journey when they
+                enter the app.
+              </p>
+            </div>
+          </div>
+        </section>
+    </>
   );
 }
 
@@ -96,209 +332,14 @@ export default function ArenaClubCase() {
 
         {/* ---- body ---- */}
         <div className={styles.body}>
-          <div className={styles.compareGroup} data-reveal="">
-          <nav className={styles.tabs} aria-label="Project">
-            {TABS.map((t, i) => (
-              <span key={t} className={i === 0 ? styles.tabOn : styles.tab}>
-                {t}
-              </span>
-            ))}
-          </nav>
-
-          <section className={styles.compare} aria-label="Before and after">
-            <div className={styles.compareCol}>
-              <p className={styles.compareLabel}>Before</p>
-              <video
-                className={styles.beforeShot}
-                src="/case/arena/before.mp4"
-                poster="/case/arena/before-poster.webp"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label="The Arena Club homepage before the redesign"
-              />
-            </div>
-            <div className={styles.compareCol}>
-              <p className={styles.compareLabel}>After</p>
-              <HomeVideo className={styles.afterShot} />
-            </div>
-          </section>
-          </div>
-
-          <section className={styles.row} data-reveal="">
-            <h2 className={styles.label}>The problem</h2>
-            <div className={styles.content}>
-              <h3>Arena Club is growing beyond sports/pokémon trading cards.</h3>
-              <p>
-                Arena Club is expanding into watches, coins, wine, and other collectibles.
-                As the marketplace grows, our users&rsquo; interests become increasingly
-                different.
-              </p>
-              <p>
-                But our homepage still largely shows everyone the same repeated content
-                that already exists elsewhere in the product.
-              </p>
-              <p>
-                Experienced collectors often skip Home entirely and go straight to Packs,
-                where they can find the same content with less scrolling.
-              </p>
-            </div>
-          </section>
-
-          <section className={styles.row} data-reveal="">
-            <h2 className={styles.label}>Current data</h2>
-            <div className={styles.content}>
-              <h3>So... what should Home actually be for?</h3>
-              <p>
-                Looking at the existing homepage, In the first two pack sections, only 15%
-                of users who click successfully convert and purchase a pack.
-              </p>
-              <p>
-                The Buy Again section gets a fraction of those clicks, yet 50% convert.{" "}
-                <strong>Which is 3× better conversion per click.</strong>
-              </p>
-              <div className={styles.figureCrop}>
-                <img src="/case/arena/buyagain.webp" alt="The existing homepage next to the Buy Again section" />
-              </div>
-            </div>
-          </section>
-
-          <section className={styles.row} data-reveal="">
-            <div className={styles.labelStack}>
-              <h2 className={styles.label}>User testing process</h2>
-              <div className={styles.labelTools}>
-                <img className={styles.toolTilt} src="/case/arena/tool-claude.webp" alt="Claude" />
-                <img className={styles.toolTiltB} src="/case/arena/tool-cursor.webp" alt="Cursor" />
-              </div>
-            </div>
-            <div className={styles.content}>
-              <h3>
-                Instead of asking users what they want, I gave them a functional prototype
-                to use and play with.
-              </h3>
-              <p>
-                I built a V1 of a redesigned homepage with Claude code and published it to
-                vercel to give a select cohort of users acces
-              </p>
-              <div className={styles.protoPanel}>
-                <img className={styles.protoA} src="/case/arena/proto-a.webp" alt="" />
-                <img className={styles.protoB} src="/case/arena/proto-b.webp" alt="" />
-                <img className={styles.protoC} src="/case/arena/proto-c.webp" alt="" />
-              </div>
-              <p>
-                I sent it to 45 Arena Club users and track every major interaction, what
-                they click, what they ignore, and how they move through the page.
-              </p>
-              <p>
-                The experience ends with a survey, followed by 11 user interviews to
-                understand the behavior I&rsquo;m seeing.
-              </p>
-            </div>
-          </section>
-
-          <section className={styles.row} data-reveal="">
-            <h2 className={styles.label}>Software Sidequest</h2>
-            <div className={styles.content}>
-              <p>
-                To track and analyze these events and data, I used my user research log
-                tool, also built fully with claude code, which I have been using to track
-                and keep all my research and insights in one place.
-              </p>
-              <img className={styles.figure} src="/case/arena/log-1.webp" alt="The research log tool" />
-              <img className={styles.figure} src="/case/arena/log-2.webp" alt="Interview transcripts and affinity mapping" />
-            </div>
-          </section>
-
-          <section className={styles.row} data-reveal="">
-            <h2 className={styles.label}>What I learned</h2>
-            <div className={styles.content}>
-              <h3>Home doesn&rsquo;t need more content. It needs more relevance.</h3>
-              <p>Users don&rsquo;t need another place to browse the same inventory.</p>
-              <p>
-                What they want is an easier way to keep up with the things they already
-                care about.
-              </p>
-              <p>
-                Today, watchlists, offers, and auctions are spread across the product.
-                Some collectors even rely on phone alarms, spreadsheets, and bookmarked
-                filters to keep track.
-              </p>
-              <p>
-                The research surfaces opportunities like saved searches, favorite packs,
-                watchlist price changes, auctions ending soon, new listings, and active
-                auctions.
-              </p>
-              <h3>
-                Home can understand what I care about, what needs my attention, and what I
-                might want next.
-              </h3>
-            </div>
-          </section>
-
-          <section className={styles.row} data-reveal="">
-            <h2 className={styles.label}>Biggest challenge</h2>
-            <div className={styles.content}>
-              <h3>How do I show more without making Home feel overwhelming?</h3>
-              <p>
-                Once I knew what belonged on Home, the challenge became fitting it all
-                together. More sections created more opportunities for discovery, but they
-                also created more noise.
-              </p>
-              <p>
-                I designed the first version around an MVP that could start learning what
-                each collector cared about and eventually power deeper personalization. At
-                the same time, I stripped back repetitive UI, unnecessary copy, and
-                competing actions so the collectibles themselves could do more of the work.
-              </p>
-              <p>
-                The goal wasn&rsquo;t to show everything. It was to learn what was worth
-                showing each user.
-              </p>
-            </div>
-          </section>
-
-          <section className={styles.row} data-reveal="">
-            <h2 className={styles.label}>The solution</h2>
-            <div className={styles.content}>
-              <h3>
-                A homepage built around the collector.
-                <br />
-                What&rsquo;s yours &rarr; What&rsquo;s changed &rarr; What&rsquo;s new
-              </h3>
-              <div className={styles.solutionPanel}>
-                <HomeVideo className={styles.solutionShot} />
-              </div>
-              <div className={styles.steps}>
-                <p>
-                  01 / Pick up where you left off
-                  <br />
-                  <span>&nbsp;Bring time-sensitive activity like auctions and watchlist changes forward.</span>
-                </p>
-                <p>
-                  02 / Built around your interests
-                  <br />
-                  <span>&nbsp;Shape Home around the categories and collectibles each user cares about.</span>
-                </p>
-                <p>
-                  03 / Make discovery relevant
-                  <br />
-                  <span>&nbsp;Keep new inventory discoverable without making it the entire purpose of Home.</span>
-                </p>
-                <p>
-                  04 / Built to grow
-                  <br />
-                  <span>&nbsp;Add new categories without turning Home into an increasingly long, generic feed.</span>
-                </p>
-                <p>
-                  The research doesn&rsquo;t just tell us which sections to add. It gives
-                  Home a reason to exist and role in the user&rsquo;s journey when they
-                  enter the app.
-                </p>
-              </div>
-            </div>
-          </section>
+          <ProjectTabs
+            tabs={[
+              { name: "Homepage", panel: <HomepagePanel />, body: <HomepageBody /> },
+              { name: "Slab Packs®", panel: <SlabPanel /> },
+              { name: "Offers" },
+              { name: "Showrooms" },
+            ]}
+          />
         </div>
 
         {/* ---- next ---- */}

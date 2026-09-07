@@ -22,10 +22,10 @@ export default function ScrollReveal() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     root.dataset.reveal = "on";
 
-    const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const all = () => Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
 
     if (!("IntersectionObserver" in window)) {
-      targets.forEach((el) => (el.dataset.shown = ""));
+      all().forEach((el) => (el.dataset.shown = ""));
       return;
     }
 
@@ -45,8 +45,19 @@ export default function ScrollReveal() {
       { rootMargin: "100000px 0px -8% 0px", threshold: 0.04 },
     );
 
-    targets.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    const watch = () => all().forEach((el) => io.observe(el));
+    watch();
+
+    // Blocks can arrive after this effect has run — switching a tab swaps a
+    // whole panel of them in. Without this they'd never be observed, and the
+    // hiding rule would leave them invisible for good.
+    const mo = new MutationObserver(watch);
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
   }, [pathname]);
 
   return null;

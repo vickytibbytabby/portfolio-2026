@@ -306,8 +306,14 @@
   line-height: 1.25;
 }
 
+/* they're buttons now, so the browser's own chrome has to go */
 .tab,
 .tabOn {
+  appearance: none;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
   border-radius: 999px;
   white-space: nowrap;
   transition: background-color 220ms var(--ease), color 220ms var(--ease);
@@ -321,6 +327,11 @@
 .tab {
   padding: calc(12 * var(--pu)) calc(20 * var(--pu));
   color: rgba(0, 0, 0, 0.55);
+}
+
+.tab:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.8);
 }
 
 /* ---- before / after ---------------------------------------------------- */
@@ -410,6 +421,16 @@
 }
 
 /* ---- rows -------------------------------------------------------------- */
+
+/* Before and after share this exactly — same height, width from the aspect —
+   so the pair can't end up at different sizes. */
+.slabShot {
+  flex: none;
+  height: calc(var(--panel-h) * 0.83041);
+  width: auto;
+  object-fit: contain;
+  border-radius: 18.43% / 8.83%;
+}
 
 .row {
   display: flex;
@@ -520,6 +541,36 @@
 
 /* the tabs and the before/after panel are one group, 73px apart. It needs its
    own width or the panel's `width: 100%` resolves against a shrink-to-fit box. */
+/* ---- coming soon ------------------------------------------------------- */
+
+/* A tab with nothing written behind it yet lands here rather than a dead end. */
+.soon {
+  width: 100%;
+  min-height: calc(300 * var(--pu));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(14 * var(--pu));
+  padding: calc(48 * var(--pu));
+  border-radius: calc(20 * var(--pu));
+  border: 1.5px dashed rgba(0, 0, 0, 0.16);
+  background: #fbfbfb;
+  text-align: center;
+}
+
+.soonTitle {
+  font-family: var(--hand);
+  font-size: calc(40 * var(--t) * var(--pu));
+  line-height: 1.25;
+}
+
+.soonNote {
+  font-size: calc(20 * var(--t) * var(--pu));
+  line-height: 1.35;
+  color: var(--muted);
+}
+
 .compareGroup {
   width: 100%;
   display: flex;
@@ -787,13 +838,31 @@
   }
 
   .beforeShot,
-  .afterShot {
+  .afterShot,
+  .slabShot {
     height: auto;
     width: 92%;
   }
 
-  .afterShot {
+  .afterShot,
+  .slabShot {
     border-radius: 6vw / 2.9vw;
+  }
+
+  /* --pu is a quarter of a pixel on a phone, so the frame-unit box collapses */
+  .soon {
+    min-height: 180px;
+    gap: 8px;
+    padding: 28px 20px;
+    border-radius: 14px;
+  }
+
+  .soonTitle {
+    font-size: clamp(21px, 5.4vw, 28px);
+  }
+
+  .soonNote {
+    font-size: clamp(14px, 3.6vw, 16px);
   }
 
   .row {
