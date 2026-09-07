@@ -228,6 +228,12 @@ the art and flush to its bottom.
 
 ## Sub-pages
 
+**Airbnb** (`/work/airbnb`) is a port, not a new design: Vicky's earlier Framer
+write-up translated into this site's case-study format — the same 1512 frame,
+the same `--pu` unit, the same label-left / content-right rows. Its copy, 18
+images and 3 demo videos were pulled from that page; the videos came down at
+2158x1234 and were re-encoded to 1200 wide (5.2MB + 8.0MB -> 159KB + 385KB).
+
 **Scallion Studios** (`/work/scallion-studios`, Figma 109:2) is the second case
 study: a full-bleed scallions hero with the recipe app playing on a phone, the
 lede, two facts, the Instagram panel, a *Case study coming soon* line and the

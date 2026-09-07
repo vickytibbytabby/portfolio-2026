@@ -77,7 +77,7 @@ export default function ScallionStudiosCase() {
         </section>
 
         {/* ---- next ---- */}
-        <Link href="/#works" className={styles.next} data-reveal="">
+        <Link href="/work/airbnb" className={styles.next} data-reveal="">
           <span className={styles.nextThumb}>
             <img src="/work-cards/airbnb-bg.webp" alt="" />
             <img className={styles.nextShot} src="/work-cards/airbnb-content.webp" alt="" />

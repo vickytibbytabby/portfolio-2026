@@ -1,0 +1,545 @@
+/*
+  Ported from Vicky's earlier Framer write-up into this site's case-study
+  format: the same 1512 frame, the same --pu unit, the same label-left /
+  content-right rows the Arena Club study uses.
+*/
+.page {
+  --t: 0.81;
+  width: calc(1512 * var(--pu));
+  margin-inline: auto;
+}
+
+/* ---- hero -------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: linear-gradient(180deg, #000000 0%, #de403f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* the demo sits in the gradient rather than filling the screen — cropping a
+   browser window to a full-bleed hero loses the thing it's showing */
+.heroArt {
+  width: calc(1100 * var(--pu));
+  max-width: 86%;
+  height: auto;
+  max-height: 74svh;
+  object-fit: contain;
+  border-radius: calc(16 * var(--pu));
+  box-shadow: 0 calc(24 * var(--pu)) calc(64 * var(--pu)) rgba(0, 0, 0, 0.35);
+  display: block;
+}
+
+/* ---- lede -------------------------------------------------------------- */
+
+.lede {
+  width: calc(1000 * var(--pu));
+  margin: calc(116.6 * var(--pu)) auto 0;
+  font-size: calc(40 * var(--t) * var(--pu));
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* ---- facts ------------------------------------------------------------- */
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: calc(40 * var(--pu));
+  padding: calc(20 * var(--pu)) calc(200 * var(--pu));
+  margin-top: calc(116.6 * var(--pu));
+}
+
+.fact {
+  display: flex;
+  gap: calc(20 * var(--pu));
+  font-size: calc(24 * var(--t) * var(--pu));
+  line-height: 1.25;
+}
+
+.fact dt {
+  flex: none;
+  width: calc(350 * var(--pu));
+  font-family: var(--hand);
+  opacity: 0.5;
+}
+
+.fact dd {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+/* ---- body -------------------------------------------------------------- */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(72 * var(--pu));
+  padding: calc(20 * var(--pu)) calc(200 * var(--pu));
+  margin-top: calc(72 * var(--pu));
+}
+
+.row {
+  display: flex;
+  gap: calc(20 * var(--pu));
+  width: 100%;
+}
+
+.label {
+  flex: none;
+  width: calc(350 * var(--pu));
+  font-family: var(--hand);
+  font-weight: 400;
+  font-size: calc(24 * var(--t) * var(--pu));
+  line-height: 1.25;
+  opacity: 0.5;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(24 * var(--pu));
+  font-size: calc(24 * var(--t) * var(--pu));
+  line-height: 1.35;
+}
+
+.content h3 {
+  font-size: calc(32 * var(--t) * var(--pu));
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+.content h4 {
+  font-size: calc(26 * var(--t) * var(--pu));
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+.content p {
+  margin: 0;
+}
+
+.kicker {
+  font-family: var(--hand);
+  font-size: calc(20 * var(--t) * var(--pu));
+  letter-spacing: 0.04em;
+  opacity: 0.5;
+}
+
+.figure {
+  width: 100%;
+  height: auto;
+  border-radius: calc(16 * var(--pu));
+  display: block;
+}
+
+/* three photos with their captions under them */
+.photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(20 * var(--pu));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.photos li {
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * var(--pu));
+}
+
+.photos img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: calc(16 * var(--pu));
+  display: block;
+}
+
+.photos span {
+  font-size: calc(18 * var(--t) * var(--pu));
+  color: var(--muted);
+}
+
+/* the questions that came up in the group chats */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(12 * var(--pu));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chips li {
+  padding: calc(10 * var(--pu)) calc(18 * var(--pu));
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.05);
+  font-size: calc(20 * var(--t) * var(--pu));
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: calc(20 * var(--pu));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stats li {
+  display: flex;
+  flex-direction: column;
+  gap: calc(6 * var(--pu));
+  padding: calc(28 * var(--pu));
+  border-radius: calc(16 * var(--pu));
+  background: #f3f3f3;
+}
+
+.stats strong {
+  font-size: calc(56 * var(--t) * var(--pu));
+  line-height: 1;
+  font-weight: 500;
+}
+
+.stats em {
+  font-style: normal;
+  font-size: calc(16 * var(--t) * var(--pu));
+  color: var(--muted);
+}
+
+.faces {
+  display: flex;
+  gap: calc(-8 * var(--pu));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.faces li + li {
+  margin-left: calc(-18 * var(--pu));
+}
+
+.faces img {
+  width: calc(72 * var(--pu));
+  height: calc(72 * var(--pu));
+  border-radius: 50%;
+  object-fit: cover;
+  border: calc(3 * var(--pu)) solid var(--bg);
+  display: block;
+}
+
+.quotes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: calc(20 * var(--pu));
+}
+
+.quotes blockquote {
+  display: flex;
+  flex-direction: column;
+  gap: calc(12 * var(--pu));
+  margin: 0;
+  padding: calc(28 * var(--pu));
+  border-radius: calc(16 * var(--pu));
+  background: #f3f3f3;
+}
+
+.ask {
+  font-family: var(--hand);
+  opacity: 0.55;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: calc(20 * var(--pu));
+  align-items: start;
+}
+
+.pair img {
+  width: 100%;
+  height: auto;
+  border-radius: calc(16 * var(--pu));
+  display: block;
+}
+
+.impact {
+  display: flex;
+  flex-direction: column;
+  gap: calc(12 * var(--pu));
+  padding: calc(28 * var(--pu));
+  border-radius: calc(16 * var(--pu));
+  background: #f3f3f3;
+}
+
+.ideas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(20 * var(--pu));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ideas li {
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * var(--pu));
+}
+
+.ideas img {
+  width: 100%;
+  height: auto;
+  border-radius: calc(12 * var(--pu));
+  background: #f3f3f3;
+  display: block;
+}
+
+.findings {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(20 * var(--pu));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.findings li {
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--pu));
+  padding: calc(24 * var(--pu));
+  border-radius: calc(16 * var(--pu));
+  background: #f3f3f3;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: calc(10 * var(--pu));
+}
+
+.feature video {
+  width: 100%;
+  height: auto;
+  margin-top: calc(10 * var(--pu));
+  border-radius: calc(16 * var(--pu));
+  background: #f3f3f3;
+  display: block;
+}
+
+/* a plain list, not a flex column: flex items don't render list markers, and
+   these read as bullets */
+.metrics {
+  margin: 0;
+  padding-left: calc(24 * var(--pu));
+}
+
+.metrics li + li {
+  margin-top: calc(10 * var(--pu));
+}
+
+/* ---- next project ------------------------------------------------------ */
+
+.next {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: calc(32 * var(--pu));
+  margin: calc(72 * var(--pu)) auto calc(124 * var(--pu));
+  font-family: var(--hand);
+  font-size: calc(32 * var(--t) * var(--pu));
+  line-height: 1.25;
+}
+
+.nextThumb {
+  position: relative;
+  display: block;
+  width: calc(114.639 * var(--pu));
+  height: calc(134.116 * var(--pu));
+  border-radius: calc(20 * var(--pu));
+  overflow: hidden;
+  rotate: 4.34deg;
+  flex: none;
+  transition: rotate 300ms var(--ease), scale 300ms var(--ease);
+}
+
+.nextThumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nextThumb .nextShot {
+  inset: auto;
+  left: 8%;
+  top: 50%;
+  width: 84%;
+  height: auto;
+  translate: 0 -50%;
+  object-fit: contain;
+}
+
+.nextArrow {
+  width: calc(53.657 * var(--pu));
+  height: calc(22.963 * var(--pu));
+  flex: none;
+  transition: translate 240ms var(--ease);
+}
+
+.next:hover .nextThumb {
+  rotate: 0deg;
+  scale: 1.06;
+}
+
+.next:hover .nextArrow {
+  translate: calc(8 * var(--pu)) 0;
+}
+
+/* ---- phones ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .page {
+    width: 100%;
+  }
+
+  .hero {
+    height: 62svh;
+    min-height: 340px;
+  }
+
+  .heroArt {
+    width: 92%;
+    max-width: none;
+    border-radius: 10px;
+  }
+
+  .lede {
+    width: auto;
+    margin-top: clamp(36px, 9vw, 56px);
+    padding-inline: var(--gutter);
+    font-size: clamp(21px, 5.4vw, 28px);
+  }
+
+  .facts {
+    gap: clamp(16px, 4vw, 24px);
+    padding: 0 var(--gutter);
+    margin-top: clamp(36px, 9vw, 56px);
+  }
+
+  .fact,
+  .row {
+    flex-direction: column;
+    gap: 8px;
+    font-size: clamp(16px, 4.2vw, 19px);
+  }
+
+  .fact dt,
+  .label {
+    width: auto;
+    font-size: clamp(17px, 4.4vw, 20px);
+  }
+
+  .body {
+    gap: clamp(36px, 9vw, 56px);
+    padding: 0 var(--gutter);
+    margin-top: clamp(36px, 9vw, 56px);
+  }
+
+  .row {
+    gap: 10px;
+  }
+
+  .content {
+    gap: clamp(14px, 3.6vw, 20px);
+    font-size: clamp(16px, 4.2vw, 19px);
+  }
+
+  .content h3 {
+    font-size: clamp(21px, 5.4vw, 26px);
+  }
+
+  .content h4 {
+    font-size: clamp(18px, 4.6vw, 21px);
+  }
+
+  .kicker {
+    font-size: clamp(14px, 3.6vw, 16px);
+  }
+
+  /* the multi-column blocks all become one column */
+  .photos,
+  .stats,
+  .quotes,
+  .pair,
+  .ideas,
+  .findings {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .chips li {
+    padding: 8px 14px;
+    font-size: clamp(14px, 3.6vw, 16px);
+  }
+
+  .stats li,
+  .quotes blockquote,
+  .impact,
+  .findings li {
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .stats strong {
+    font-size: clamp(36px, 9vw, 46px);
+  }
+
+  .faces img {
+    width: 52px;
+    height: 52px;
+    border-width: 2px;
+  }
+
+  .faces li + li {
+    margin-left: -12px;
+  }
+
+  .figure,
+  .pair img,
+  .photos img,
+  .feature video {
+    border-radius: 10px;
+  }
+
+  .next {
+    gap: 14px;
+    margin: clamp(40px, 10vw, 64px) auto clamp(48px, 12vw, 80px);
+    padding-inline: var(--gutter);
+    font-size: clamp(17px, 4.3vw, 21px);
+  }
+
+  .nextThumb {
+    width: 58px;
+    height: 68px;
+    border-radius: 10px;
+  }
+
+  .nextArrow {
+    width: 30px;
+    height: 13px;
+  }
+}
