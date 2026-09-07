@@ -37,12 +37,14 @@ export default function ScrollReveal() {
           io.unobserve(entry.target);
         }
       },
-      // Bottom: a little short of the foot of the window, so a block starts
-      // moving just before it would otherwise be fully on screen.
       // Top: effectively unbounded, so anything already scrolled PAST counts as
       // seen. Without it, jumping down the page (an anchor link, a flick on a
       // trackpad) leaves the blocks it skipped invisible until you scroll back.
-      { rootMargin: "100000px 0px -8% 0px", threshold: 0.04 },
+      //
+      // Bottom: zero. An inset here carves out a dead band at the foot of the
+      // window, and anything that comes to rest inside it never reveals — on a
+      // phone the site footer sat in exactly that band and stayed invisible.
+      { rootMargin: "100000px 0px 0px 0px", threshold: 0.04 },
     );
 
     const watch = () => all().forEach((el) => io.observe(el));

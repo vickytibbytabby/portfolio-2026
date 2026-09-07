@@ -423,13 +423,17 @@
 /* ---- rows -------------------------------------------------------------- */
 
 /* Before and after share this exactly — same height, width from the aspect —
-   so the pair can't end up at different sizes. */
-.slabShot {
+   so the pair can't end up at different sizes. Both are composited into the
+   same iPhone chassis, so they line up to the pixel. */
+.framedShot {
   flex: none;
   height: calc(var(--panel-h) * 0.83041);
+  /* The chassis is 856 x 1778; a video has to round to even pixels, so its
+     intrinsic ratio lands a hair off the still's. Fixing the ratio here keeps
+     the two boxes identical to the pixel at every width. */
+  aspect-ratio: 856 / 1778;
   width: auto;
   object-fit: contain;
-  border-radius: 18.43% / 8.83%;
 }
 
 .row {
@@ -839,13 +843,12 @@
 
   .beforeShot,
   .afterShot,
-  .slabShot {
+  .framedShot {
     height: auto;
     width: 92%;
   }
 
-  .afterShot,
-  .slabShot {
+  .afterShot {
     border-radius: 6vw / 2.9vw;
   }
 

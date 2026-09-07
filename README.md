@@ -443,8 +443,25 @@ deployed. Worth confirming your licence covers web use before going live.
   *Case Study Coming Soon* empty state rather than a dead end. Slab Packs has
   its before/after pair; the other two are the empty state alone.
 
-  Both shots in a pair wear one class (`.slabShot`), so they cannot end up at
-  different sizes.
+  **Both sides of a pair sit in the same iPhone chassis.** It was lifted out of
+  Vicky's Slab Packs mockup — the titanium rim measures 856 x 1778, which is an
+  iPhone 17 Pro body to the millimetre, so the screen follows from Apple's own
+  spec: 792 x 1722 (exactly 1206:2622) centred in it. `scripts/` has no script
+  for this; the chassis PNG lives at `public/case/arena/` sources in the session
+  scratch. Everything else — the Offers screenshot, both recordings — is
+  composited into that screen, so the pairs line up to the pixel.
+
+  Two traps worth remembering:
+
+  - The videos are padded with the panel's own `#f3f3f3`, and the first encodes
+    came out `yuvj420p` / full range. The file decodes correctly with ffmpeg but
+    a browser reads it as limited range and lifts 243 to **pure white**, so each
+    video sat in a white card on a grey panel. Encoding with
+    `scale=out_range=limited` + `-color_range tv` fixes it. `before.mp4` had the
+    same latent bug and was re-encoded too.
+  - A video has to round to even pixels, so its intrinsic ratio lands a hair off
+    the still's — 1px of difference in the rendered height. `.framedShot` fixes
+    `aspect-ratio: 856 / 1778` so both boxes are identical at every width.
 
   This is what forced the MutationObserver in `ScrollReveal.tsx`: a tab swap
   mounts a whole panel of `data-reveal` blocks after that component's effect has

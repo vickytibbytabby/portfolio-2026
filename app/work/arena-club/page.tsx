@@ -46,31 +46,41 @@ function HomepagePanel() {
   );
 }
 
-/** Slab Packs: the live marketing page beside the redesigned in-app flow. Both
- *  wear the same class, so they can't drift apart in size. */
-function SlabPanel() {
+/**
+ * A before/after pair where both sides are in the same iPhone mockup.
+ *
+ * The chassis was lifted out of the Slab Packs mockup and every other shot is
+ * composited into its screen, so the two sides line up exactly — same body,
+ * same bezel, same corner radius. They also share one class, so nothing can
+ * make one bigger than the other.
+ */
+function FramedPair({
+  slug,
+  before,
+  after,
+}: {
+  slug: string;
+  before: string;
+  after: string;
+}) {
   return (
     <section className={styles.compare} aria-label="Before and after">
       <div className={styles.compareCol}>
         <p className={styles.compareLabel}>Before</p>
-        <img
-          className={styles.slabShot}
-          src="/case/arena/slab-before.webp"
-          alt="The Slab Packs page before the redesign"
-        />
+        <img className={styles.framedShot} src={`/case/arena/${slug}-before.webp`} alt={before} />
       </div>
       <div className={styles.compareCol}>
         <p className={styles.compareLabel}>After</p>
         <video
-          className={styles.slabShot}
-          src="/case/arena/slab-after.mp4"
-          poster="/case/arena/slab-after-poster.webp"
+          className={styles.framedShot}
+          src={`/case/arena/${slug}-after.mp4`}
+          poster={`/case/arena/${slug}-after-poster.webp`}
           autoPlay
           muted
           loop
           playsInline
           preload="metadata"
-          aria-label="The redesigned Slab Packs flow"
+          aria-label={after}
         />
       </div>
     </section>
@@ -335,8 +345,26 @@ export default function ArenaClubCase() {
           <ProjectTabs
             tabs={[
               { name: "Homepage", panel: <HomepagePanel />, body: <HomepageBody /> },
-              { name: "Slab Packs®", panel: <SlabPanel /> },
-              { name: "Offers" },
+              {
+                name: "Slab Packs®",
+                panel: (
+                  <FramedPair
+                    slug="slab"
+                    before="The Slab Packs page before the redesign"
+                    after="The redesigned Slab Packs flow"
+                  />
+                ),
+              },
+              {
+                name: "Offers",
+                panel: (
+                  <FramedPair
+                    slug="offers"
+                    before="The Offers page before the redesign"
+                    after="The redesigned Offers flow"
+                  />
+                ),
+              },
               { name: "Showrooms" },
             ]}
           />
