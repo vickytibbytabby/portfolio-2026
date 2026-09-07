@@ -10,12 +10,6 @@ export const metadata: Metadata = {
     "Redesigning Airbnb's map feature around local insights, so choosing where to stay in a new city stops being guesswork.",
 };
 
-const FACTS = [
-  { q: "Role", a: "Product Designer" },
-  { q: "Tools", a: "Figma, Google Forms" },
-  { q: "Timeline", a: "January 2024" },
-];
-
 const TRAVEL = [
   { src: "/case/airbnb/travel-hcmc.webp", label: "Ho Chi Minh City, Vietnam" },
   { src: "/case/airbnb/travel-uluwatu.webp", label: "Uluwatu, Bali, Indonesia" },
@@ -138,14 +132,19 @@ export default function AirbnbCase() {
           in a new city stops being guesswork.
         </p>
 
-        {/* ---- facts ---- */}
+        {/* ---- context ---- */}
         <dl className={styles.facts} data-reveal="">
-          {FACTS.map((f) => (
-            <div key={f.q} className={styles.fact}>
-              <dt>{f.q}</dt>
-              <dd>{f.a}</dd>
-            </div>
-          ))}
+          <div className={styles.fact}>
+            <dt>Context</dt>
+            <dd>
+              <p>
+                For my Kleiner Perkins 2024 Fellowship application, I did a case study on a
+                problem that I personally encountered during my study abroad experience in
+                Singapore.
+              </p>
+              <p>I was accepted into the KP fellowship with this case study.</p>
+            </dd>
+          </div>
         </dl>
 
         <div className={styles.body}>
@@ -157,9 +156,9 @@ export default function AirbnbCase() {
                 part, especially in a city you don&rsquo;t know.
               </p>
               <p>
-                While studying abroad in Singapore I travelled Southeast Asia on Airbnb —
-                Bali, Vietnam, the Philippines. Every booking came with the same guesswork,
-                so I took the map feature apart and rebuilt it.
+                I booked my way around Southeast Asia that year — Bali, Vietnam, the
+                Philippines — and every booking came with the same guesswork. So I took
+                the map feature apart and rebuilt it.
               </p>
               <ul className={styles.photos}>
                 {TRAVEL.map((t) => (

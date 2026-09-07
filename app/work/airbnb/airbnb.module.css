@@ -21,15 +21,16 @@
   justify-content: center;
 }
 
-/* The demo sits in the gradient at about two thirds of the width. No radius and
-   no shadow of its own: the recording already carries the browser's white card,
-   and framing that again put a rectangle inside a rectangle. */
+/* The demo sits in the gradient at about two thirds of the width. The recording
+   is cropped to the browser card itself — its white surround is gone — so this
+   radius rounds the card rather than adding a second frame around it. */
 .heroArt {
   width: calc(1020 * var(--pu));
   max-width: 78%;
   height: auto;
   max-height: 70svh;
   object-fit: contain;
+  border-radius: calc(16 * var(--pu));
   display: block;
 }
 
@@ -72,6 +73,14 @@
   flex: 1;
   min-width: 0;
   margin: 0;
+}
+
+.fact dd p {
+  margin: 0;
+}
+
+.fact dd p + p {
+  margin-top: 1.1em;
 }
 
 /* ---- body -------------------------------------------------------------- */
@@ -445,6 +454,7 @@
     width: 88%;
     max-width: none;
     max-height: 74%;
+    border-radius: 8px;
   }
 
   .lede {

@@ -245,9 +245,11 @@ same, the sentences around it are not. The page lost about 950px of height in
 the trim.
 
 Its hero is the demo sitting in the red gradient at about two thirds of the
-width — with **no radius and no shadow of its own**. The recording already
-carries the browser's white card, so framing that again puts a rectangle inside
-a rectangle.
+width. The recordings are **cropped to the browser card itself** — the card runs
+27px in from the left of the source frame and 32px down from the top — so the
+white surround is gone and the radius rounds the card rather than adding a
+second frame around it. That framing is what made a rectangle inside a
+rectangle the first time.
 
 **Scallion Studios** (`/work/scallion-studios`, Figma 109:2) is the second case
 study: a full-bleed scallions hero with the recipe app playing on a phone, the
