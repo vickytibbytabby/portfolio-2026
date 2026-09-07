@@ -1,0 +1,93 @@
+/* Centred at the top of the window. Unscrolled it's bare text; once you scroll
+   it gains a glass pill — 454 x 70 in the Figma, which is the 30px item row
+   plus 20/24 padding. The row sits at the pill's centre either way, so nothing
+   jumps when the pill appears. */
+.nav {
+  position: fixed;
+  top: calc(37.44 * var(--u));
+  left: 50%;
+  translate: -50% 0;
+  z-index: 60;
+  border-radius: 999px;
+  padding: calc(20 * var(--u)) calc(24 * var(--u));
+  color: var(--ink);
+  transition: background-color 260ms var(--ease), box-shadow 260ms var(--ease),
+    backdrop-filter 260ms var(--ease), color 200ms var(--ease);
+}
+
+/* Liquid glass: a blurred, saturated sample of what's behind, a hairline rim,
+   and a bright inner edge along the top so it reads as a lens rather than a
+   flat scrim. */
+.nav[data-scrolled] {
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Over the card art the page behind is dark, so the ink and the glass invert. */
+.nav[data-dark] {
+  color: #ffffff;
+}
+
+.nav[data-dark][data-scrolled] {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  /* 32px between items in the Figma */
+  gap: calc(32 * var(--u));
+}
+
+.link {
+  position: relative;
+  display: inline-block;
+  font-family: var(--hand);
+  font-size: var(--fs-ui);
+  line-height: 1.25;
+  color: currentColor;
+  white-space: nowrap;
+  transition: opacity 200ms var(--ease);
+}
+
+.link:hover {
+  opacity: 0.55;
+}
+
+.link[data-active] {
+  color: var(--blue);
+}
+
+.nav[data-dark] .link[data-active] {
+  color: #7db4ff;
+}
+
+/* The mobile frame puts the row in a 325-wide box inset 32 on every side, at
+   the top of the screen, with the items spread across it rather than gapped.
+   Scaled off the 402 frame so it holds at other phone widths. */
+@media (max-width: 900px) {
+  .nav {
+    top: 0;
+    width: min(325px, 83vw);
+    padding: clamp(20px, 8vw, 32px);
+  }
+
+  .list {
+    width: 100%;
+    justify-content: space-between;
+    gap: clamp(8px, 3vw, 16px);
+  }
+
+  .link {
+    font-size: clamp(14px, 4vw, 16px);
+  }
+}

@@ -1,0 +1,460 @@
+/*
+  The 1512 x 3671 frame (Figma 81:672). Blocks are placed at their exact frame
+  coordinates in --pu (one design pixel, width-derived, capped at 1px) rather
+  than stacked in flow — flow accumulates rounding, and this frame isn't evenly
+  centred anyway (the principles grid sits at x=78.17 with a 48px right margin).
+  Everything becomes a fluid single-column read below 900px.
+*/
+.page {
+  position: relative;
+  width: calc(1512 * var(--pu));
+  height: calc(2849 * var(--pu));   /* the footer follows in flow */
+  margin-inline: auto;
+}
+
+/* 184.509 x 209.435 at 663.744, 131.895 */
+.portrait {
+  position: absolute;
+  left: calc(663.744 * var(--pu));
+  top: calc(131.895 * var(--pu));
+  width: calc(184.509 * var(--pu));
+  height: calc(209.435 * var(--pu));
+  object-fit: cover;
+}
+
+/* QJae 24, centred, 921.408 wide at 295.297, 418.61 */
+/* The nav dissolves into this page, so the page picks that up: the portrait
+   fades up and the copy rises under it. */
+@keyframes storyFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes storyRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.portrait {
+  animation: storyFade 620ms var(--ease) backwards;
+}
+
+.intro {
+  animation: storyRise 640ms var(--ease) backwards;
+  animation-delay: 180ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait,
+  .intro {
+    animation: none;
+  }
+}
+
+.intro {
+  position: absolute;
+  left: calc(295.297 * var(--pu));
+  top: calc(418.612 * var(--pu));
+  width: calc(921.408 * var(--pu));
+  font-family: var(--hand);
+  font-size: calc(24 * var(--pu));
+  line-height: 1.25;
+  text-align: center;
+}
+
+/* the frame draws an empty line between paragraphs */
+.intro p + p {
+  margin-top: 1.25em;
+}
+
+/* ---- the food scatter ------------------------------------------------- */
+
+.scatter {
+  position: absolute;
+  inset: 0;
+}
+
+/* The frame's 280.241 x 547.830 is the ROTATED bounding box; at -1.54deg that
+   is a 265.797 x 540.880 element, placed by its own top-left. The button is the
+   hover target and carries the placement; the image just fills it. */
+.instaButton {
+  position: absolute;
+  left: calc(614.73 * var(--pu));
+  top: calc(782.68 * var(--pu));
+  width: calc(265.797 * var(--pu));
+  height: calc(540.88 * var(--pu));
+  padding: 0;
+  border: 0;
+  background: none;
+  rotate: -1.54deg;
+  border-radius: calc(20 * var(--pu));
+  -webkit-tap-highlight-color: transparent;
+  transition: scale 400ms var(--ease);
+}
+
+.instaButton:hover,
+.scatter[data-open] .instaButton {
+  scale: 1.015;
+}
+
+.insta {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  box-shadow: 0 calc(4 * var(--pu)) calc(4 * var(--pu)) rgba(0, 0, 0, 0.15);
+}
+
+/* Touch has no hover, so the shot rocks very slightly and says so. Both stop
+   the moment it's been opened. */
+.hint {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 10px);
+  translate: -50% 0;
+  font-family: var(--grotesque);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.32);
+  animation: hintPulse 2.8s var(--ease) infinite;
+}
+
+@keyframes hintPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes hintRock {
+  0%,
+  70%,
+  100% {
+    rotate: -1.54deg;
+  }
+  80% {
+    rotate: -3.6deg;
+  }
+  90% {
+    rotate: 0.4deg;
+  }
+}
+
+/* the wrappers are only boxes on phones */
+.spillWrap,
+.spill {
+  display: contents;
+}
+
+/* --x/--y are the frame coordinates. Closed, each photo is translated onto the
+   Instagram shot's centre (--dx/--dy, worked out in FoodScatter.tsx) and shrunk
+   to nothing, so they all come out of the same place. */
+.food {
+  position: absolute;
+  left: calc(var(--x) * var(--pu));
+  top: calc(var(--y) * var(--pu));
+  width: calc(234 * var(--pu));
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--pu));
+  translate: calc(var(--dx) * var(--pu)) calc(var(--dy) * var(--pu));
+  scale: 0.14;
+  rotate: 0deg;
+  opacity: 0;
+  transition:
+    translate 620ms var(--ease),
+    scale 620ms var(--ease),
+    rotate 620ms var(--ease),
+    opacity 300ms var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+
+.scatter[data-open] .food {
+  translate: 0 0;
+  scale: 1;
+  rotate: calc(var(--tilt) * 1deg);
+  opacity: 1;
+}
+
+.food img {
+  width: 100%;
+  aspect-ratio: 3072 / 4096;
+  object-fit: cover;
+  display: block;
+}
+
+.food figcaption {
+  font-family: var(--grotesque);
+  font-weight: 500;
+  font-size: calc(12 * var(--pu));
+  line-height: 1.25;
+  text-align: center;
+}
+
+/* a small lift, like picking a photo off the table — it has to keep the tilt,
+   or hovering would flatten the photo it just spread out */
+.scatter[data-open] .food:hover {
+  translate: 0 calc(-8 * var(--pu));
+  rotate: calc((var(--tilt) - 1.5) * 1deg);
+}
+
+/* ---- principles -------------------------------------------------------- */
+
+.principlesTitle {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(1668.758 * var(--pu));
+  font-family: var(--hand);
+  font-size: calc(24 * var(--pu));
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.principles {
+  position: absolute;
+  left: calc(78.17 * var(--pu));
+  top: calc(1753 * var(--pu));
+  width: calc(1385.826 * var(--pu));
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: calc(24 * var(--pu));
+  row-gap: calc(28 * var(--pu));
+}
+
+.card {
+  background: #f3f3f3;
+  border-radius: calc(20 * var(--pu));
+  padding: calc(32 * var(--pu));
+  min-height: calc(324.293 * var(--pu));
+  transition: background-color 240ms var(--ease), translate 240ms var(--ease);
+}
+
+.card:hover {
+  background: #ededed;
+  translate: 0 calc(-3 * var(--pu));
+}
+
+.card h3 {
+  font-size: calc(32 * var(--pu));
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.card p {
+  margin-top: calc(12 * var(--pu));
+  font-size: calc(24 * var(--pu));
+  line-height: 1.25;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* ---- call to action ---------------------------------------------------- */
+
+.cta {
+  position: absolute;
+  left: calc(564 * var(--pu));
+  top: calc(2558.449 * var(--pu));
+  width: calc(384 * var(--pu));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(29 * var(--pu));
+  font-family: var(--hand);
+  font-size: calc(24 * var(--pu));
+  line-height: 1.25;
+}
+
+.emailButton {
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 999px;
+  padding: calc(12 * var(--pu)) calc(20 * var(--pu));
+  font-family: var(--grotesque);
+  font-size: calc(24 * var(--pu));
+  line-height: 1.25;
+  transition: translate 200ms var(--ease), box-shadow 200ms var(--ease);
+}
+
+.emailButton:hover {
+  translate: 0 -2px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+
+.emailButton:active {
+  translate: 0 0;
+}
+
+/* ---- phones ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .page {
+    position: static;
+    width: 100%;
+    height: auto;
+    padding-inline: var(--gutter);
+    padding-bottom: clamp(48px, 12vw, 88px);
+  }
+
+  .portrait,
+  .intro,
+  .scatter,
+  .principlesTitle,
+  .principles,
+  .cta {
+    position: static;
+    left: auto;
+    top: auto;
+  }
+
+  .portrait {
+    display: block;
+    width: clamp(128px, 34vw, 168px);
+    height: auto;
+    margin: clamp(88px, 22vw, 120px) auto 0;
+  }
+
+  .intro {
+    width: 100%;
+    margin: clamp(28px, 7vw, 44px) auto 0;
+    font-size: clamp(19px, 4.8vw, 24px);
+  }
+
+  /* the scatter can't survive a 390px column, so the photos stack under the
+     Instagram shot and unfold from nothing when it's tapped */
+  .scatter {
+    inset: auto;
+    margin-top: clamp(40px, 10vw, 64px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .instaButton {
+    position: static;
+    width: min(62%, 260px);
+    height: auto;
+    aspect-ratio: 265.797 / 540.88;
+    border-radius: 14px;
+    margin-bottom: clamp(8px, 2vw, 16px);
+  }
+
+  .hint {
+    top: calc(100% + 8px);
+  }
+
+  /* 0fr to 1fr collapses the whole block rather than leaving a hole in the
+     page waiting to be filled */
+  .spillWrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    width: 100%;
+    transition: grid-template-rows 520ms var(--ease);
+  }
+
+  .scatter[data-open] .spillWrap {
+    grid-template-rows: 1fr;
+  }
+
+  .spill {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(16px, 4vw, 28px);
+    /* needed for the 0fr collapse; the padding keeps a tilted corner clear of
+       the clip and gives the bottom row's caption room */
+    overflow: hidden;
+    padding: 3px 5px;
+  }
+
+  .food {
+    position: static;
+    width: 100%;
+    gap: 8px;
+    translate: none;
+    scale: 0.96;
+    transition:
+      scale 420ms var(--ease),
+      opacity 420ms var(--ease);
+  }
+
+  .scatter[data-open] .food {
+    translate: none;
+    scale: 1;
+    /* a softer angle: two columns of photos sit much closer than the frame's
+       scatter does */
+    rotate: calc(var(--tilt) * 0.6deg);
+  }
+
+  .food figcaption {
+    font-size: clamp(11px, 2.9vw, 13px);
+  }
+
+  .scatter[data-open] .food:hover {
+    translate: none;
+    rotate: calc(var(--tilt) * 1deg);
+  }
+
+  /* no hover to invite the tap with, so the shot rocks a little on its own */
+  @media (hover: none) {
+    .scatter:not([data-open]) .instaButton {
+      animation: hintRock 4.5s var(--ease) infinite;
+    }
+  }
+
+  .principlesTitle {
+    margin-top: clamp(48px, 12vw, 80px);
+    font-size: clamp(19px, 4.8vw, 24px);
+  }
+
+  .principles {
+    grid-template-columns: 1fr;
+    width: 100%;
+    left: auto;
+    row-gap: clamp(14px, 3.6vw, 20px);
+    margin-top: clamp(20px, 5vw, 32px);
+  }
+
+  .card {
+    min-height: 0;
+    padding: clamp(20px, 5vw, 28px);
+    border-radius: 16px;
+  }
+
+  .card h3 {
+    font-size: clamp(21px, 5.4vw, 28px);
+  }
+
+  .card p {
+    margin-top: 8px;
+    font-size: clamp(16px, 4.2vw, 20px);
+  }
+
+  .cta {
+    width: 100%;
+    margin-top: clamp(48px, 12vw, 80px);
+    gap: 18px;
+    font-size: clamp(18px, 4.6vw, 23px);
+  }
+
+  .emailButton {
+    padding: 12px 22px;
+    font-size: clamp(17px, 4.4vw, 21px);
+  }
+}

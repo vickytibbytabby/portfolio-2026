@@ -1,0 +1,19 @@
+node_modules/
+.next/
+out/
+build/
+.DS_Store
+*.pem
+.env*
+!.env.example
+next-env.d.ts
+.vercel
+*.tsbuildinfo
+.gstack/
+.next-build/
+
+# local tooling scratch
+.playwright-mcp/
+# one-off debug screenshots
+/hero-1512.png
+/works-row1.png

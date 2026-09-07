@@ -1,0 +1,63 @@
+/* 48px padding all round, 1512 frame (Figma 81:765). */
+.footer {
+  padding: calc(48 * var(--pu));
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(32 * var(--pu));
+  max-width: calc(1416 * var(--pu));
+  margin-inline: auto;
+}
+
+.name {
+  font-family: var(--hand);
+  line-height: 1.25;
+}
+
+.big {
+  font-size: calc(64 * var(--pu));
+}
+
+.small {
+  font-size: calc(32 * var(--pu));
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--hand);
+  font-size: calc(32 * var(--pu));
+  line-height: 1.25;
+}
+
+.link {
+  transition: opacity 200ms var(--ease), translate 200ms var(--ease);
+}
+
+.link:hover {
+  opacity: 0.55;
+  translate: calc(-4 * var(--pu)) 0;
+}
+
+@media (max-width: 900px) {
+  .footer {
+    padding: clamp(24px, 6vw, 40px);
+  }
+
+  .inner {
+    max-width: none;
+  }
+
+  .big {
+    font-size: clamp(34px, 9vw, 52px);
+  }
+
+  .small,
+  .links {
+    font-size: clamp(17px, 4.4vw, 22px);
+  }
+}

@@ -1,0 +1,865 @@
+/*
+  The 1512-wide case study frame (Figma 59:1467), in --pu — one design pixel,
+  width-derived and capped at 1px, so it is exact up to 1512 and then centres.
+  The whole thing becomes a single fluid column below 900px.
+
+  This page has no top nav: the hero is a full-bleed image and the only
+  navigation is "Back", which the design puts inside it.
+*/
+.page {
+  /* Every font-size on this page is a Figma pixel times --t. The frame's type
+     runs large on a 14" fold, so it is dialled back ~19%. */
+  --t: 0.81;
+  width: calc(1512 * var(--pu));
+  margin-inline: auto;
+}
+
+/* ---- hero -------------------------------------------------------------- */
+
+/* Exactly the first screen — the pack animation is the whole of it. */
+.hero {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: #0a5f21;
+}
+
+/* The homepage dissolves into this page, so the page picks that up: the hero
+   fades up and the text rises under it. No scaling — the art arrives at its
+   size and stays there. */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.heroArt {
+  animation: fadeIn 620ms var(--ease) backwards;
+}
+
+.back,
+.lede {
+  animation: riseIn 700ms var(--ease) backwards;
+  animation-delay: 220ms;
+}
+
+.back {
+  animation-delay: 380ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroArt,
+  .back,
+  .lede {
+    animation: none;
+  }
+}
+
+.heroArt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.back {
+  position: fixed;
+  z-index: 70;
+  /* the frame puts the ARROW at 48,48 — the pill's padding is pulled back out
+     so adding it didn't shift the mark */
+  left: calc(28 * var(--pu));
+  top: calc(36 * var(--pu));
+  display: inline-flex;
+  align-items: center;
+  gap: calc(12 * var(--pu));
+  padding: calc(12 * var(--pu)) calc(20 * var(--pu));
+  border-radius: 999px;
+  font-family: var(--hand);
+  font-size: calc(32 * var(--t) * var(--pu));
+  line-height: 1.25;
+  color: #ffffff;
+  transition:
+    color 220ms var(--ease),
+    background-color 260ms var(--ease),
+    box-shadow 260ms var(--ease),
+    backdrop-filter 260ms var(--ease),
+    opacity 260ms var(--ease),
+    translate 320ms var(--ease);
+}
+
+/* over the body rather than the hero art, where white would vanish */
+.back[data-ink="dark"] {
+  color: #111111;
+}
+
+/* The same liquid glass the homepage nav wears: at the top of the page it's
+   bare over the hero, and once you've scrolled it carries its own ground so it
+   never depends on what happens to be behind it. */
+.back[data-scrolled] {
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* still on the hero art, which is dark — the glass inverts with the ink */
+.back[data-scrolled]:not([data-ink="dark"]) {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* out of the way on the way down, back the moment you turn around */
+.back[data-hidden] {
+  opacity: 0;
+  translate: 0 calc(-24 * var(--pu));
+  pointer-events: none;
+}
+
+/* The hand-drawn arrow is filled white in the file, so it's painted as a mask
+   in currentColor — that's what lets the ink flip when it leaves the hero. */
+.backArrow {
+  width: calc(55 * var(--pu));
+  height: calc(25 * var(--pu));
+  background: currentColor;
+  -webkit-mask: url("/case/arena/back-arrow.svg") center / contain no-repeat;
+  mask: url("/case/arena/back-arrow.svg") center / contain no-repeat;
+  transition: translate 240ms var(--ease);
+}
+
+.back:hover .backArrow {
+  translate: calc(-8 * var(--pu)) 0;
+}
+
+/* ---- lede -------------------------------------------------------------- */
+
+/* The lede lights word by word as you scroll it — see `Lede.tsx`. Grey is the
+   unread state, not a permanent colour, so it's light enough to read the
+   contrast against the black that follows it. */
+.word {
+  color: #c3c3c3;
+  transition: color 300ms var(--ease);
+}
+
+.word[data-on] {
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    color: var(--ink);
+    transition: none;
+  }
+}
+
+.lede {
+  width: calc(729.359 * var(--pu));
+  margin: calc(110.43 * var(--pu)) auto 0;
+  font-size: calc(40 * var(--t) * var(--pu));
+  line-height: 1.25;
+  text-align: center;
+}
+
+.lede em {
+  font-style: italic;
+}
+
+/* ---- facts ------------------------------------------------------------- */
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: calc(60 * var(--pu));
+  padding: calc(20 * var(--pu)) calc(200 * var(--pu));
+  margin-top: calc(118.1 * var(--pu));
+}
+
+.fact {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(20 * var(--pu));
+  font-size: calc(24 * var(--t) * var(--pu));
+  line-height: 1.25;
+}
+
+.fact dt {
+  flex: none;
+  width: calc(427.259 * var(--pu));
+  font-family: var(--hand);
+  opacity: 0.5;
+}
+
+.fact dd {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: calc(20 * var(--pu));
+}
+
+/* The five exports arrived at different scales and three of them carried an
+   opaque sheet behind the tile; they're now all one 180px tile filling its own
+   frame, so a single square box and one radius covers every one. */
+.tool {
+  position: relative;
+  display: block;
+  flex: none;
+  height: calc(89.402 * var(--pu));
+  width: calc(89.402 * var(--pu));
+}
+
+.tool img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 22.5%;
+  box-shadow: 0 calc(3 * var(--pu)) calc(8 * var(--pu)) rgba(0, 0, 0, 0.14);
+  transition: translate 240ms var(--ease), rotate 240ms var(--ease);
+}
+
+/* they lift and tilt a little, like a row of app icons being picked up */
+.tool:hover img {
+  translate: 0 calc(-6 * var(--pu));
+  rotate: -4deg;
+}
+
+/* The name rises in under the tile it belongs to. Absolutely placed so a long
+   one (ChatGPT) can't widen its icon and push the row out of step. */
+.toolName {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  translate: -50% calc(-2 * var(--pu));
+  font-family: var(--grotesque);
+  font-weight: 500;
+  font-size: calc(15 * var(--t) * var(--pu));
+  line-height: 1.25;
+  white-space: nowrap;
+  color: var(--muted);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease), translate 240ms var(--ease);
+}
+
+.tool:hover .toolName {
+  opacity: 1;
+  translate: -50% calc(8 * var(--pu));
+}
+
+/* ---- body -------------------------------------------------------------- */
+
+/*
+  --panel-w is the measure for this whole column. The before/after panel is
+  sized by the fold, and the text rows take the same width so their margins line
+  up with it — otherwise the prose runs wider than the figure above it.
+*/
+.body {
+  /* The measure is the facts block's: the frame's 200px side padding, so the
+     prose, the figures and the panel all share one edge. The panel keeps its
+     fold-locked HEIGHT and takes this width, rather than staying in the
+     frame's 1389 x 962 ratio. */
+  --panel-h: min(calc(962.141 * var(--pu)), calc(100svh - 140px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(60 * var(--pu));
+  padding: calc(20 * var(--pu)) calc(200 * var(--pu));
+  margin-top: calc(116.6 * var(--pu));
+}
+
+/* ---- tabs -------------------------------------------------------------- */
+
+.tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(20 * var(--pu));
+  padding: calc(12 * var(--pu));
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.03);
+  font-size: calc(24 * var(--t) * var(--pu));
+  line-height: 1.25;
+}
+
+.tab,
+.tabOn {
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background-color 220ms var(--ease), color 220ms var(--ease);
+}
+
+.tabOn {
+  background: var(--bg);
+  padding: calc(20 * var(--pu)) calc(24 * var(--pu));
+}
+
+.tab {
+  padding: calc(12 * var(--pu)) calc(20 * var(--pu));
+  color: rgba(0, 0, 0, 0.55);
+}
+
+/* ---- before / after ---------------------------------------------------- */
+
+/*
+  At the design's own size this panel stands 962px tall, which doesn't fit a 14"
+  fold. So it takes the SMALLER of its Figma height and what the fold leaves,
+  and the width follows the ratio. Everything inside is a percentage of the
+  panel, so the whole composition scales with it rather than being cropped.
+*/
+.compare {
+  height: var(--panel-h);
+  width: 100%;
+  display: flex;
+  border-radius: calc(20 * var(--pu));
+  background: #f3f3f3;
+  overflow: hidden;
+}
+
+/* two equal halves, each keeping its label centred over its phone however wide
+   the panel gets */
+.compareCol {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 4.233%;
+  gap: 2.4%;
+}
+
+.compareLabel {
+  flex: none;
+  font-family: var(--hand);
+  /* 32px of the panel's 962.141, so it shrinks with the panel */
+  font-size: calc(var(--panel-h) * 0.03326 * var(--t));
+  line-height: 1.25;
+}
+
+/*
+  This one is a recording composited INTO the chassis (see the note on
+  scripts/build-phone-mockup.py), on the panel's own #f3f3f3 so its soft edges
+  blend in. It carries no pale surround, so unlike .afterShot it needs no
+  clipping — just its own ratio.
+*/
+.beforeShot {
+  flex: none;
+  /* against --panel-h, not the column's padded box, so the design's ratio holds */
+  height: calc(var(--panel-h) * 0.83041);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/*
+  The recording carries its own phone chassis plus a pale 4/2/3/4px surround,
+  so it is clipped to the chassis' own bounds (700 x 1461 of the 706 x 1468
+  frame) and rounded to its 129px corner — the same treatment the homepage card
+  uses. Its ratio is a little narrower than the Figma's still, so it centres on
+  the still's box rather than stretching to it.
+*/
+.afterShot,
+.solutionShot {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 700 / 1461;
+}
+
+.solutionShot {
+  position: absolute;
+}
+
+.afterShot video,
+.solutionShot video {
+  position: absolute;
+  width: calc(100% * 706 / 700);
+  height: calc(100% * 1468 / 1461);
+  left: calc(-100% * 4 / 700);
+  top: calc(-100% * 3 / 1461);
+  display: block;
+}
+
+.afterShot {
+  flex: none;
+  height: calc(var(--panel-h) * 0.81376);
+  border-radius: 18.43% / 8.83%;
+}
+
+/* ---- rows -------------------------------------------------------------- */
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(20 * var(--pu));
+  width: 100%;
+}
+
+.label {
+  flex: none;
+  width: calc(350 / 1312 * 100%);
+  font-family: var(--hand);
+  font-size: calc(24 * var(--t) * var(--pu));
+  font-weight: 400;
+  line-height: 1.25;
+  opacity: 0.5;
+}
+
+.labelStack {
+  flex: none;
+  width: calc(350 / 1312 * 100%);
+  display: flex;
+  flex-direction: column;
+  gap: calc(20 * var(--pu));
+}
+
+.labelTools {
+  display: flex;
+  align-items: center;
+  gap: calc(20 * var(--pu));
+}
+
+/* the same two tiles again, beside the section title, at a tilt */
+.toolTilt,
+.toolTiltB {
+  height: calc(89.402 * var(--pu));
+  width: calc(89.402 * var(--pu));
+  object-fit: contain;
+  border-radius: 22.5%;
+  box-shadow: 0 calc(3 * var(--pu)) calc(8 * var(--pu)) rgba(0, 0, 0, 0.14);
+}
+
+.toolTilt {
+  rotate: -3.92deg;
+}
+
+.toolTiltB {
+  rotate: 2.77deg;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(32 * var(--pu));
+}
+
+.content h3 {
+  font-size: calc(40 * var(--t) * var(--pu));
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.content p {
+  font-size: calc(24 * var(--t) * var(--pu));
+  line-height: 1.25;
+}
+
+/* the frame draws an empty line between paragraphs inside a block */
+.content p + p {
+  margin-top: calc(-32 * var(--pu) + 1.25em);
+}
+
+.content strong {
+  font-weight: 500;
+}
+
+.figure {
+  width: 100%;
+  height: auto;
+  border-radius: calc(20 * var(--pu));
+  display: block;
+}
+
+/*
+  The Figma crops this one into a shorter box — 942 x 685.43 with the image at
+  136.69% height, pulled up 8.9%. Letting it run at its own ratio makes the
+  section 250px too tall and pushes everything below it out of step.
+*/
+.figureCrop {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 942 / 685.434;
+  border-radius: calc(20 * var(--pu));
+  overflow: hidden;
+}
+
+.figureCrop img {
+  position: absolute;
+  left: 0;
+  top: -8.9%;
+  width: 100%;
+  height: 136.69%;
+  object-fit: cover;
+  display: block;
+}
+
+/* the tabs and the before/after panel are one group, 73px apart. It needs its
+   own width or the panel's `width: 100%` resolves against a shrink-to-fit box. */
+.compareGroup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(73 * var(--pu));
+}
+
+/* ---- prototype panel --------------------------------------------------- */
+
+.protoPanel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 942 / 590.798;
+  border-radius: calc(20 * var(--pu));
+  background: #f3f3f3;
+}
+
+.protoA,
+.protoB,
+.protoC {
+  position: absolute;
+  top: 8.409%;
+  height: auto;
+}
+
+.protoA {
+  left: 6.646%;
+  width: 27.248%;
+}
+
+.protoB {
+  left: 36.479%;
+  width: 26.975%;
+}
+
+.protoC {
+  left: 66.037%;
+  width: 27.317%;
+}
+
+/* ---- solution panel ---------------------------------------------------- */
+
+.solutionPanel {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 942 / 590.798;
+  border-radius: calc(20 * var(--pu));
+  background: #f3f3f3;
+  overflow: hidden;
+}
+
+.solutionShot {
+  left: 50%;
+  top: 7.478%;
+  height: 85.041%;
+  translate: -50% 0;
+  /* an elliptical radius that works out circular: the phone is 0.47913 wide for
+     its height, so 18.43% of width and 8.83% of height are the same length */
+  border-radius: 18.43% / 8.83%;
+}
+
+.steps p {
+  font-size: calc(24 * var(--t) * var(--pu));
+  line-height: 1.25;
+}
+
+.steps p + p {
+  margin-top: 1.25em;
+}
+
+/* ---- next project ------------------------------------------------------ */
+
+.next {
+  /* flex, not inline-flex: an inline box ignores `margin-inline: auto` and the
+     row just sat against the left edge */
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: calc(32 * var(--pu));
+  /* the frame leaves 124px between this row and the footer */
+  margin: calc(72 * var(--pu)) auto calc(124 * var(--pu));
+  font-family: var(--hand);
+  font-size: calc(32 * var(--t) * var(--pu));
+  line-height: 1.25;
+}
+
+.nextThumb {
+  position: relative;
+  display: block;
+  width: calc(114.639 * var(--pu));
+  height: calc(134.116 * var(--pu));
+  border-radius: calc(20 * var(--pu));
+  overflow: hidden;
+  rotate: 4.34deg;
+  flex: none;
+  transition: rotate 300ms var(--ease), scale 300ms var(--ease);
+}
+
+.nextThumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nextShot {
+  left: calc(30.83 * var(--pu));
+  top: calc(14.97 * var(--pu));
+  width: calc(52.97 * var(--pu));
+  height: calc(104.169 * var(--pu));
+  inset: auto;
+}
+
+.nextArrow {
+  width: calc(53.657 * var(--pu));
+  height: calc(22.963 * var(--pu));
+  flex: none;
+  transition: translate 240ms var(--ease);
+}
+
+.next:hover .nextThumb {
+  rotate: 0deg;
+  scale: 1.06;
+}
+
+.next:hover .nextArrow {
+  translate: calc(8 * var(--pu)) 0;
+}
+
+/* ---- phones ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .page {
+    width: 100%;
+  }
+
+  .hero {
+    height: 62svh;
+    min-height: 340px;
+  }
+
+  /* fill the shorter hero rather than leaving a band of bare gradient under
+     the pack — it's centred, so cropping the sides costs nothing */
+  .heroArt {
+    left: 0;
+    translate: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .back {
+    left: calc(var(--gutter) - 14px);
+    top: calc(clamp(20px, 5vw, 32px) - 8px);
+    font-size: clamp(18px, 4.6vw, 22px);
+    gap: 8px;
+    padding: 8px 14px;
+  }
+
+  .backArrow {
+    width: 29px;
+    height: 13px;
+  }
+
+  .lede {
+    width: auto;
+    margin-top: clamp(36px, 9vw, 56px);
+    padding-inline: var(--gutter);
+    font-size: clamp(21px, 5.4vw, 28px);
+  }
+
+  .facts {
+    gap: clamp(24px, 6vw, 36px);
+    padding: 0 var(--gutter);
+    margin-top: clamp(36px, 9vw, 56px);
+  }
+
+  /* the label column can't hold beside the body at this width */
+  .fact {
+    flex-direction: column;
+    gap: 8px;
+    font-size: clamp(16px, 4.2vw, 19px);
+  }
+
+  .fact dt {
+    width: auto;
+    font-size: clamp(17px, 4.4vw, 20px);
+  }
+
+  .tools {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .tool {
+    height: clamp(46px, 12vw, 62px);
+    width: clamp(46px, 12vw, 62px);
+  }
+
+  /* no hover on a phone, so the names simply sit under the row */
+  .toolName {
+    opacity: 1;
+    translate: -50% 6px;
+    font-size: clamp(10px, 2.8vw, 12px);
+  }
+
+  .tools {
+    padding-bottom: 22px;
+  }
+
+  .body {
+    gap: clamp(36px, 9vw, 56px);
+    padding: 0 var(--gutter);
+    margin-top: clamp(36px, 9vw, 56px);
+  }
+
+  .compareGroup {
+    width: 100%;
+    max-width: 100%;
+    gap: clamp(16px, 4vw, 24px);
+  }
+
+  /* the tab row scrolls sideways rather than wrapping */
+  .tabs {
+    display: flex;
+    align-self: stretch;
+    width: 100%;
+    max-width: 100%;
+    gap: 6px;
+    padding: 6px;
+    font-size: clamp(14px, 3.6vw, 16px);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabOn {
+    padding: 10px 16px;
+  }
+
+  .tab {
+    padding: 10px 14px;
+  }
+
+  /* the two halves stay side by side; they just get tighter */
+  .compare {
+    width: 100%;
+    height: auto;
+    padding-bottom: clamp(12px, 3vw, 20px);
+    border-radius: 14px;
+  }
+
+  .compareCol {
+    padding-top: clamp(12px, 3vw, 18px);
+    gap: clamp(8px, 2vw, 12px);
+  }
+
+  .compareLabel {
+    font-size: clamp(15px, 3.8vw, 18px);
+  }
+
+  .beforeShot,
+  .afterShot {
+    height: auto;
+    width: 92%;
+  }
+
+  .afterShot {
+    border-radius: 6vw / 2.9vw;
+  }
+
+  .row {
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .label {
+    width: auto;
+    font-size: clamp(17px, 4.4vw, 20px);
+  }
+
+  .labelStack {
+    width: auto;
+    gap: 12px;
+  }
+
+  .toolTilt,
+  .toolTiltB {
+    height: clamp(46px, 12vw, 62px);
+    width: clamp(46px, 12vw, 62px);
+  }
+
+  .content {
+    gap: clamp(16px, 4vw, 24px);
+  }
+
+  .content h3 {
+    font-size: clamp(21px, 5.4vw, 28px);
+  }
+
+  .content p,
+  .steps p {
+    font-size: clamp(16px, 4.2vw, 19px);
+  }
+
+  .content p + p {
+    margin-top: calc(-1 * clamp(16px, 4vw, 24px) + 1.25em);
+  }
+
+  .figure {
+    border-radius: 10px;
+  }
+
+  /* the panels are already percentage-based, so they only need a softer radius */
+  .protoPanel,
+  .solutionPanel {
+    border-radius: 12px;
+  }
+
+  .next {
+    gap: 14px;
+    margin-top: clamp(40px, 10vw, 64px);
+    padding-inline: var(--gutter);
+    font-size: clamp(17px, 4.3vw, 21px);
+  }
+
+  .nextThumb {
+    width: 58px;
+    height: 68px;
+    border-radius: 10px;
+  }
+
+  .nextArrow {
+    width: 30px;
+    height: 13px;
+  }
+}

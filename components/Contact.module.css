@@ -1,0 +1,63 @@
+/* "Let's Chat!" on the rail, the three links right-aligned against the same
+   page margin as the cards above. */
+.section {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: calc(32 * var(--u));
+  padding-top: calc(128 * var(--u));
+  padding-bottom: calc(116 * var(--u));
+}
+
+.title {
+  flex: none;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /* the block starts 20px below the title's cap line */
+  margin-top: calc(20 * var(--u));
+}
+
+.link {
+  font-family: var(--hand);
+  font-size: var(--fs-ui);
+  /* 40px per line in the Figma's 120px block */
+  line-height: calc(40 / 24);
+  transition: opacity 200ms var(--ease);
+}
+
+.link:hover {
+  opacity: 0.55;
+}
+
+/* The mobile frame (75:337) keeps this a row — title left, links right — where
+   it used to stack. It also sets the title against a 32px line rather than the
+   display size. */
+@media (max-width: 900px) {
+  .section {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: clamp(40px, 10vw, 56px);
+    padding-bottom: clamp(40px, 10vw, 56px);
+  }
+
+  .title {
+    font-size: clamp(26px, 8vw, 32px);
+  }
+
+  .links {
+    align-items: flex-end;
+    margin-top: 0;
+  }
+
+  .link {
+    font-size: clamp(14px, 4vw, 16px);
+    line-height: 1.5;
+  }
+}

@@ -1,0 +1,80 @@
+/* Sits over the page until the fonts and media have settled. */
+.cover {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--bg);
+  display: grid;
+  place-items: center;
+  transition: opacity 460ms var(--ease), visibility 0s linear 460ms;
+}
+
+.cover[data-done] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* The spinner only turns up if the wait is long enough to need explaining. */
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  transition: opacity 260ms var(--ease);
+}
+
+.box[data-slow] {
+  opacity: 1;
+}
+
+/* macOS's spinner: twelve tapered spokes, each a twelfth of a turn behind the
+   last, fading round the dial rather than one arc chasing its tail. */
+.spinner {
+  position: relative;
+  display: block;
+  width: 28px;
+  height: 28px;
+}
+
+.spinner i {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2.5px;
+  height: 7.5px;
+  margin-left: -1.25px;
+  border-radius: 1.25px;
+  background: #8c8c8c;
+  transform-origin: 1.25px 14px;
+  animation: spoke 1s steps(12, end) infinite;
+}
+
+@keyframes spoke {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.16;
+  }
+}
+
+.word {
+  font-family: var(--grotesque);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: #8c8c8c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover {
+    transition: none;
+  }
+
+  .spinner i {
+    animation: none;
+    opacity: 0.5;
+  }
+}

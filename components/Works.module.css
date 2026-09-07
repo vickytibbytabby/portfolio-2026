@@ -1,0 +1,318 @@
+/* Two cards per row (Figma 66:1551), full width, with the height locked so a
+   whole row fits one window — see `.mediaBox`. No snap points. */
+.section {
+  position: relative;
+  padding-block: calc(60 * var(--u)) calc(120 * var(--u));
+  /* the desktop frame's card; the mobile frame draws its own, see the foot */
+  --card-ratio: 716 / 897;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* 40px between the columns, 80px between the rows */
+  column-gap: calc(40 * var(--u));
+  row-gap: calc(80 * var(--u));
+}
+
+.card {
+  display: flex;
+}
+
+/* The card's own column, and the thing that turns into a link when there's a
+   case study behind it. */
+.shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* 20px between the media and its caption */
+  gap: calc(20 * var(--u));
+}
+
+/*
+  A linked card lifts a little and its title takes the site's blue, with the
+  arrow sliding out from behind the text. Only the media box moves — lifting the
+  caption too would break the grid's baseline against the card beside it.
+*/
+.shell[data-link] .mediaBox,
+.shell[data-link] .title,
+.shell[data-link] .arrow {
+  transition: translate 320ms var(--ease), box-shadow 320ms var(--ease),
+    color 200ms var(--ease), opacity 200ms var(--ease);
+}
+
+.shell[data-link]:hover .mediaBox,
+.shell[data-link]:focus-visible .mediaBox {
+  translate: 0 calc(-8 * var(--u));
+  box-shadow: 0 calc(18 * var(--u)) calc(40 * var(--u)) rgba(0, 0, 0, 0.18);
+}
+
+.shell[data-link]:hover .title,
+.shell[data-link]:focus-visible .title {
+  color: var(--blue);
+}
+
+/* the arrow only exists on a linked card; it rests hidden under the text */
+.arrow {
+  display: inline-block;
+  margin-left: 0.25em;
+  opacity: 0;
+  translate: calc(-6 * var(--u)) 0;
+}
+
+.shell[data-link]:hover .arrow,
+.shell[data-link]:focus-visible .arrow {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.shell[data-link]:focus-visible {
+  outline: none;
+}
+
+/*
+  Full column width, with the height locked so a whole row — media, the 20px gap
+  under it and the 70px caption — fits one window. At the design's own ratio the
+  media alone stands 897 tall against a 716 width, which is more than a 14"
+  leaves once the browser has taken its chrome.
+
+  `aspect-ratio` with a `max-height` does both jobs: the height comes off the
+  width at the design ratio, and the clamp cuts it back on a short window
+  WITHOUT touching the width. So the card runs edge to edge either way, and on a
+  window tall enough the clamp goes slack and the box is the design's exactly.
+
+  What gives is the card's ratio, never the artwork's — the background fills the
+  wider box (a gradient just spans it; Scallion's photograph crops to it) and
+  everything that must not be stretched sits in `.stage` instead.
+
+    112  the nav's underside. Nominally 107.44 (37.44 down, 70 tall), but the
+         pill runs ~1px over its box on the text's line height — it floats over
+         the cards, so a row only counts as visible if it clears it
+     20  the card's own gap
+     70  the caption (32px title + 24px date, both at 1.25)
+      4  slack, so sub-pixel rounding can't push the caption off the foot
+*/
+.mediaBox {
+  position: relative;
+  transition: scale 420ms var(--ease), box-shadow 420ms var(--ease);
+  width: 100%;
+  aspect-ratio: var(--card-ratio);
+  max-height: calc(100svh - 206 * var(--u));
+  border-radius: calc(20 * var(--u));
+  overflow: hidden;
+  background: var(--pill-bg);
+  flex: none;
+}
+
+/*
+  The design's own 716 x 897 box, taking the card's height — its one locked
+  dimension — keeping the design ratio and centring. Overlays sit inside it at
+  their Figma percentages and SCALE with the card rather than being squashed by
+  it; only the background behind them takes the card's real shape. On a tall
+  window the stage is the whole card and this is a no-op.
+*/
+.stage {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  height: 100%;
+  aspect-ratio: var(--card-ratio);
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* darkens the photo's foot to black so the caption area reads as one mass */
+.scrim {
+  position: absolute;
+  inset: 0;
+}
+
+/* Every art layer in the design is centred, so only its top edge and width
+   vary. The box clips; the image inside it carries the crop. */
+.art {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  top: var(--art-top);
+  width: var(--art-w);
+  aspect-ratio: var(--art-ratio);
+  overflow: hidden;
+}
+
+.art img {
+  position: absolute;
+  display: block;
+  /* UCLA's illustration is laid in at 224% of its box — the global
+     `img { max-width: 100% }` would shrink it back to the box */
+  max-width: none;
+}
+
+/*
+  The recording carries its own phone chassis, and a pale 4/2/3/4px surround
+  that reads as a bright outline on a dark card — so this box is the chassis'
+  own bounds (700 x 1461 of the 706 x 1468 frame) and clips it.
+*/
+.phone {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  top: var(--v-top);
+  height: var(--v-h);
+  aspect-ratio: 700 / 1461;
+  overflow: hidden;
+  /* the chassis' own 129px radius. Two values, so the horizontal and vertical
+     radii are each 129px measured on their own axis — a single percentage
+     would give an ellipse that opens up as the card grows. */
+  border-radius: 18.4286% / 8.8296%;
+}
+
+.phone video {
+  position: absolute;
+  width: calc(100% * 706 / 700);
+  height: calc(100% * 1468 / 1461);
+  left: calc(-100% * 4 / 700);
+  top: calc(-100% * 3 / 1461);
+  display: block;
+}
+
+/* A browser capture, laid on the background at its own aspect. */
+.window {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  top: var(--v-top);
+  width: var(--v-w);
+  overflow: hidden;
+  border-radius: calc(20 * var(--u));
+}
+
+.window video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/*
+  The one overlay anchored to a corner rather than centred, so it hugs the card
+  however wide the card gets. Its height is a percentage of the card's height —
+  the same factor the stage scales by — and the width follows the mark's own
+  ratio, so it can't be stretched.
+*/
+.mark {
+  position: absolute;
+  left: var(--mark-left);
+  top: var(--mark-top);
+  height: var(--mark-h);
+  width: auto;
+  z-index: 2;
+}
+
+.caption {
+  /* the caption is indented 12px inside the card in the Figma */
+  padding-inline: calc(12 * var(--u));
+}
+
+.title {
+  font-size: calc(32 * var(--u));
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.name {
+  font-style: italic;
+}
+
+.dates {
+  font-size: var(--fs-ui);
+  line-height: 1.25;
+  color: var(--muted);
+}
+
+/*
+  The mobile frame (75:25). A 402-wide artboard: one column, a 362 x 423.5 card,
+  and — unlike the desktop frame — every mark centred at the top of the card
+  rather than hung off its corner. None of the overlay percentages carry over,
+  so the component emits the mobile set alongside the desktop one and this
+  block switches to it.
+*/
+@media (max-width: 900px) {
+  .section {
+    --card-ratio: 362 / 423.5;
+    padding-block: clamp(24px, 6vw, 48px) clamp(36px, 9vw, 64px);
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    /* 40px between the cards */
+    row-gap: clamp(32px, 10vw, 40px);
+  }
+
+  .shell {
+    gap: 12px;
+  }
+
+  .mediaBox {
+    border-radius: 20px;
+    /* phones scroll a continuous document, so the card keeps the frame's full
+       ratio rather than squatting to fit a landscape phone's window */
+    max-height: none;
+  }
+
+  .art {
+    top: var(--m-art-top);
+    width: var(--m-art-w);
+  }
+
+  .phone {
+    top: var(--m-v-top);
+    height: var(--m-v-h);
+  }
+
+  .window {
+    top: var(--m-v-top);
+    width: var(--m-v-w);
+  }
+
+  /* centred on this frame, so it takes a width and lets its own ratio set the
+     height — the reverse of the desktop rule above */
+  .mark {
+    left: 50%;
+    translate: -50% 0;
+    top: var(--m-mark-top);
+    width: var(--m-mark-w);
+    height: auto;
+  }
+
+  .caption {
+    padding-inline: 12px;
+  }
+
+  .title {
+    font-size: clamp(14px, 4vw, 16px);
+  }
+
+  .dates {
+    font-size: clamp(12px, 3.5vw, 14px);
+  }
+}
+
+/* Touch has no hover, so the arrow would never appear — show it at rest and
+   drop the lift, which only ever reads as a stuck state on a tap. */
+@media (hover: none), (pointer: coarse) {
+  .arrow {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .shell[data-link]:hover .mediaBox {
+    translate: none;
+    box-shadow: none;
+  }
+}

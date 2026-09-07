@@ -1,0 +1,325 @@
+/* ---------------------------------------------------------------------------
+   Fonts
+   QJae        — the handwriting. Hero copy, left nav, section titles.
+   Brut Grotesque — the neo-grotesque. Project rows, pills, folder label.
+--------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "QJae";
+  src: url("/fonts/QJae.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Brut Grotesque";
+  src: url("/fonts/BrutGrotesque-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Brut Grotesque";
+  src: url("/fonts/BrutGrotesque-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------------------------------------------------------------------------
+   Tokens — measured from the Figma frame at 1512px wide.
+   Every clamp() is anchored so it lands exactly on the Figma value at 1512px.
+--------------------------------------------------------------------------- */
+
+:root {
+  --bg: #ffffff;
+  --ink: #000000;
+  --muted: #767676;
+  --pill-bg: rgba(0, 0, 0, 0.06);
+  /* the hover/active blue: #0069ea on titles and nav, a deeper #0046ea on dates */
+  --blue: #0069ea;
+  --blue-deep: #0046ea;
+
+  --hand: "QJae", "Bradley Hand", "Segoe Print", cursive;
+  --grotesque: "Brut Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* MacBook Pro 14" logical width. Cards run full width up to this; past it
+     the layout stops growing and centres. */
+  --maxw: 1512px;
+
+  --gutter: clamp(20px, 2.71vw, 41px); /* 41px @ 1512 */
+
+  /* One design pixel of the 1512 x 982 Figma frame.
+     Taking the smaller of the width- and height-derived values means a whole
+     section scales down to fit a short window instead of overflowing it — which
+     is what keeps Works on a single screen. Capped at 1px so it never grows
+     past the design size on large monitors. */
+  /* How much of the window the frame is allowed to fill. At 1.0 the design
+     touches all four edges, so the slightest scroll offset clips it; 0.9 keeps
+     a comfortable margin on every side. */
+  --fit: 0.9;
+  --u: min(calc(0.06614vw * var(--fit)), calc(0.10183svh * var(--fit)), 1px);
+  /* The Figma frame's width in design pixels. Every section — the hero stage,
+     the nav rail and every .inset — is laid out inside this one centred box, so
+     they stay aligned with each other at any window size. Sizing anything off
+     the raw viewport instead makes it drift away from the rest as --u shrinks. */
+  --frame: calc(1512 * var(--u));
+  /* The page margin. The nav floats over the top now, so nothing is inset for
+     a rail — content runs to this margin on both sides. */
+  --page-margin: 20px;
+  --rail: var(--page-margin);
+  --content-right: var(--page-margin);
+
+  /* type scale — every value is its Figma px multiplied by one design pixel */
+  --fs-display: calc(64 * var(--u)); /* section titles */
+  --fs-hero: calc(32 * var(--u)); /* hero copy */
+  --fs-ui: calc(24 * var(--u)); /* nav, pills, folder label */
+
+  /* One design pixel for the long sub-pages. Unlike --u this is width-only:
+     those pages scroll, so their type must not shrink on a short window. */
+  --pu: min(calc(100vw / 1512), 1px);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------------------------------------------------------------------------
+   Reset
+--------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* The hero and Works are each exactly one frame tall, so free-scrolling can
+     leave you halfway between them with both clipped. "proximity" pulls you
+     onto a whole section only when you're already close, so it never fights a
+     deliberate scroll the way "mandatory" does. */
+  scroll-snap-type: y proximity;
+  /* the pixel arrow replaces the system cursor across the whole site */
+  cursor: image-set(url("/assets/cursor.png") 1x, url("/assets/cursor@2x.png") 2x) 0 0, auto;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--grotesque);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+p,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: inherit;
+}
+
+/* The custom cursor is the whole point on desktop, so it overrides the usual
+   pointer/text affordances — but only where a real cursor exists. */
+a,
+button,
+[role="button"] {
+  cursor: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Shared primitives
+--------------------------------------------------------------------------- */
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.417em 0.667em; /* 10px / 16px at 24px */
+  border-radius: 999px;
+  background: var(--pill-bg);
+  color: var(--muted);
+  font-family: var(--grotesque);
+  font-size: var(--fs-ui);
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.sectionTitle {
+  font-family: var(--hand);
+  font-size: var(--fs-display);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+/* Content column for every section below the hero: starts where the nav rail
+   ends, so the rail always has clear space to itself. */
+/* Content column for every section below the hero: full width of the window,
+   one --page-margin in on the right, and on the left clearing the fixed nav rail
+   plus the same margin. Unlike the hero, these sections aren't a fixed-aspect
+   composition, so they can span the window rather than the 1512 frame. */
+.inset {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-left: var(--rail);
+  padding-right: var(--content-right);
+}
+
+/* The hero is the only full-height frame left — Works is now a scrolling stack
+   of cards, so snapping to it would fight the read. */
+#home {
+  scroll-snap-align: start;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Touch / coarse pointer — no custom cursor, no hover affordances
+--------------------------------------------------------------------------- */
+
+/* Below the desktop breakpoint the rail becomes a top bar, so sections
+   reclaim the full width. */
+@media (max-width: 900px) {
+  /* phones scroll a continuous document, so snapping only gets in the way */
+  html {
+    scroll-snap-type: none;
+  }
+
+  :root {
+    --frame: 100%;
+    --maxw: 100%;
+    --page-margin: var(--gutter);
+    --rail: var(--gutter);
+    --content-right: var(--gutter);
+    --fs-display: clamp(34px, 9vw, 52px);
+    --fs-hero: clamp(14px, 4vw, 16px); /* 16px on the 402 frame */
+    --fs-ui: clamp(14px, 3.4vw, 17px);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  html {
+    cursor: auto;
+  }
+  a,
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---- scroll reveal ----------------------------------------------------- */
+
+/* Blocks marked `data-reveal` fade and rise as they come into view. The rule is
+   gated on the flag `components/ScrollReveal.tsx` sets on mount, so nothing is
+   ever left hidden if the script doesn't run. */
+html[data-reveal="on"] [data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 720ms var(--ease),
+    transform 720ms var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+html[data-reveal="on"] [data-reveal][data-shown] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-reveal="on"] [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---- first landing ----------------------------------------------------- */
+
+/* The page fades up as the cover lifts. Only `components/BootLoader.tsx` ever
+   sets `data-boot`, so a page whose script doesn't run is simply visible. */
+#app {
+  transition: opacity 700ms var(--ease);
+}
+
+html[data-boot="wait"] #app {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #app {
+    transition: none;
+  }
+
+  html[data-boot="wait"] #app {
+    opacity: 1;
+  }
+}

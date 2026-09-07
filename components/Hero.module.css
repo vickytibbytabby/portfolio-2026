@@ -1,0 +1,81 @@
+/* The hero is one screen tall; inside it, a frame-proportioned stage holds the
+   whole composition so it scales as a unit rather than stretching. */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Full width of the window, with the frame's height in design pixels. The
+   collage spreads across the window (its x positions are percentages of this
+   box) while every element's SIZE stays in frame units — see FolderCollage.
+   That's the split that lets the hero go full-bleed without the photos
+   inflating into each other on a wide window. */
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: var(--maxw);
+  height: calc(982 * var(--u));
+  flex: none;
+}
+
+.copy {
+  position: absolute;
+  z-index: 40;
+  /* The copy moved to the left with the top nav: 165.23, 246.10 of the frame. */
+  top: 25.06%;
+  left: 10.928%;
+  width: calc(413.653 * var(--u));
+  font-family: var(--hand);
+  font-size: var(--fs-hero);
+  line-height: 1.25;
+  text-align: left;
+  text-wrap: balance;
+}
+
+/* Figma gives the block 200px for four 32px lines plus the paragraph gap, so
+   the leading and the gap are both exactly 1.25em. */
+.copy p + p {
+  margin-top: 1.25em;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    /* reset the desktop centring: the collage must stretch to the full column
+       width or its aspect-ratio resolves against a zero-width box */
+    align-items: stretch;
+    /* The desktop hero clips its collage; the phone one must not. The spill is
+       laid out to ride up over the copy and to run a caption or two past the
+       hero's foot, and `overflow: hidden` here cut both — `.layer`'s own
+       `overflow: visible` can't help underneath it. */
+    overflow: visible;
+    /* the frame starts the copy 149 down its 402 width, clear of the nav */
+    padding-top: clamp(96px, 37vw, 149px);
+    padding-bottom: 0;
+  }
+
+  /* Phones get the portrait scatter instead, so the stage stops constraining. */
+  .stage {
+    display: contents;
+  }
+
+  /* The mobile frame centres the copy in a 271-wide column rather than setting
+     it left against the margin. */
+  .copy {
+    position: static;
+    width: min(271px, calc(100% - 2 * var(--gutter)));
+    max-width: none;
+    margin-inline: auto;
+    padding-inline: 0;
+    text-align: center;
+    /* 99 between the copy's foot and the folder on the frame */
+    margin-bottom: clamp(64px, 24.6vw, 99px);
+  }
+}
