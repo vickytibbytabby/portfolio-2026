@@ -463,6 +463,12 @@ deployed. Worth confirming your licence covers web use before going live.
     the still's — 1px of difference in the rendered height. `.framedShot` fixes
     `aspect-ratio: 856 / 1778` so both boxes are identical at every width.
 
+  **The row and the panel are sized to land inside one 14" fold together.** The
+  frame leaves 73px between them and sets the tabs at 24px; that plus the
+  panel's own height ran 873px against an 852px screen. The gap is 32, the tabs
+  21px on tighter padding, and `--panel-h` takes `100svh - 150px` — 797px in
+  total at 1512x852, and it still fits at 800 and 982 tall.
+
   This is what forced the MutationObserver in `ScrollReveal.tsx`: a tab swap
   mounts a whole panel of `data-reveal` blocks after that component's effect has
   run, and unobserved blocks stay invisible for good under the hiding rule.

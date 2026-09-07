@@ -284,7 +284,7 @@
      prose, the figures and the panel all share one edge. The panel keeps its
      fold-locked HEIGHT and takes this width, rather than staying in the
      frame's 1389 x 962 ratio. */
-  --panel-h: min(calc(962.141 * var(--pu)), calc(100svh - 140px));
+  --panel-h: min(calc(962.141 * var(--pu)), calc(100svh - 150px));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -298,11 +298,11 @@
 .tabs {
   display: inline-flex;
   align-items: center;
-  gap: calc(20 * var(--pu));
-  padding: calc(12 * var(--pu));
+  gap: calc(16 * var(--pu));
+  padding: calc(10 * var(--pu));
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.03);
-  font-size: calc(24 * var(--t) * var(--pu));
+  font-size: calc(21 * var(--t) * var(--pu));
   line-height: 1.25;
 }
 
@@ -321,11 +321,11 @@
 
 .tabOn {
   background: var(--bg);
-  padding: calc(20 * var(--pu)) calc(24 * var(--pu));
+  padding: calc(11 * var(--pu)) calc(22 * var(--pu));
 }
 
 .tab {
-  padding: calc(12 * var(--pu)) calc(20 * var(--pu));
+  padding: calc(11 * var(--pu)) calc(18 * var(--pu));
   color: rgba(0, 0, 0, 0.55);
 }
 
@@ -575,12 +575,15 @@
   color: var(--muted);
 }
 
+/* The frame leaves 73px here, which together with the tab row pushed the panel
+   past the bottom of a 14" fold. The whole group — row, gap and panel — is now
+   sized to land inside one screen. */
 .compareGroup {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: calc(73 * var(--pu));
+  gap: calc(32 * var(--pu));
 }
 
 /* ---- prototype panel --------------------------------------------------- */
