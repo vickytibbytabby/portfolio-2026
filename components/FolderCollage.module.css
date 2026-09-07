@@ -81,13 +81,35 @@
     translate: 0 0;
   }
   78% {
-    translate: 0 -7%;
+    translate: 0 calc(-11 * var(--u));
   }
   86% {
     translate: 0 0;
   }
   92% {
-    translate: 0 -3%;
+    translate: 0 calc(-5 * var(--u));
+  }
+}
+
+/* The label is centred with `translate: -50% 0`, and an animation overrides a
+   declared translate outright — the shared keyframes above knocked it off centre
+   for the whole cycle. It needs its own, carrying the -50% through every step.
+   The hop is a length rather than a percentage so the label and the art, which
+   are nothing like the same height, move together. */
+@keyframes folderCueLabel {
+  0%,
+  70%,
+  100% {
+    translate: -50% 0;
+  }
+  78% {
+    translate: -50% calc(-11 * var(--u));
+  }
+  86% {
+    translate: -50% 0;
+  }
+  92% {
+    translate: -50% calc(-5 * var(--u));
   }
 }
 
@@ -104,9 +126,12 @@
 }
 
 .layer:not([data-open]) .folderBack,
-.layer:not([data-open]) .folderFront,
-.layer:not([data-open]) .label {
+.layer:not([data-open]) .folderFront {
   animation: folderCue 6s var(--ease) infinite;
+}
+
+.layer:not([data-open]) .label {
+  animation: folderCueLabel 6s var(--ease) infinite;
 }
 
 .cue {

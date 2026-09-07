@@ -486,6 +486,13 @@ deployed. Worth confirming your licence covers web use before going live.
   so they all collapse into the same point rather than shrinking where they
   stand.
 
+  One trap here: **an animation overrides a declared `translate` outright**. The
+  `[Untitled]` label is centred with `translate: -50% 0`, and putting it in the
+  folder's hop keyframes — which set `translate: 0 0` — knocked it off centre for
+  the whole cycle. It has its own keyframes now, carrying the -50% through every
+  step, and the hop is a length rather than a percentage so the label and the art
+  (nothing like the same height) move together.
+
   Every few seconds the shot rocks and a small label appears under it — *tap
   here* on touch, *hover me* with a mouse — then both go quiet again. It's a cue
   that comes and goes rather than a label parked under the picture, and it stops
