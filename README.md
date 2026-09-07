@@ -230,9 +230,21 @@ the art and flush to its bottom.
 
 **Airbnb** (`/work/airbnb`) is a port, not a new design: Vicky's earlier Framer
 write-up translated into this site's case-study format — the same 1512 frame,
-the same `--pu` unit, the same label-left / content-right rows. Its copy, 18
-images and 3 demo videos were pulled from that page; the videos came down at
-2158x1234 and were re-encoded to 1200 wide (5.2MB + 8.0MB -> 159KB + 385KB).
+the same `--pu` unit, the same label-left / content-right rows, and this site's
+own two fonts throughout (nothing came across from Framer). Its copy, 18 images
+and 3 demo videos were pulled from that page; the videos came down at 2158x1234
+and were re-encoded to 1200 wide (5.2MB + 8.0MB -> 159KB + 385KB).
+
+Pull the **originals**, not what the page happens to be serving. Framer serves
+responsive images, so `currentSrc` at a 1512 viewport handed back 512-wide
+copies of charts whose originals are 2392 wide — they rendered visibly soft.
+Stripping the query string off each URL gets the source file.
+
+Its hero is the demo full-bleed. The recording already contains the browser's
+own white card, so framing it again put a rectangle inside a rectangle. That
+hero is also the one light one on the site, which is why `BackLink` takes a
+`heroInk` prop: white on white is invisible, and the pill has no glass until
+you have scrolled, so a light hero gets dark ink and the glass from the start.
 
 **Scallion Studios** (`/work/scallion-studios`, Figma 109:2) is the second case
 study: a full-bleed scallions hero with the recipe app playing on a phone, the
