@@ -244,11 +244,10 @@ The copy is deliberately shorter than the Framer original — the research is th
 same, the sentences around it are not. The page lost about 950px of height in
 the trim.
 
-Its hero is the demo full-bleed. The recording already contains the browser's
-own white card, so framing it again put a rectangle inside a rectangle. That
-hero is also the one light one on the site, which is why `BackLink` takes a
-`heroInk` prop: white on white is invisible, and the pill has no glass until
-you have scrolled, so a light hero gets dark ink and the glass from the start.
+Its hero is the demo sitting in the red gradient at about two thirds of the
+width — with **no radius and no shadow of its own**. The recording already
+carries the browser's white card, so framing that again puts a rectangle inside
+a rectangle.
 
 **Scallion Studios** (`/work/scallion-studios`, Figma 109:2) is the second case
 study: a full-bleed scallions hero with the recipe app playing on a phone, the

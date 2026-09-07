@@ -130,7 +130,7 @@ export default function AirbnbCase() {
           />
         </header>
 
-        <BackLink heroInk="dark" />
+        <BackLink />
 
         {/* ---- lede ---- */}
         <p className={styles.lede} data-reveal="">

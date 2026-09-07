@@ -19,12 +19,7 @@ const ALWAYS_AT = 40;
  * white body — so it's painted as a mask in `currentColor` and the ink flips
  * once the hero has passed under it.
  */
-/**
- * `heroInk` is the ink the arrow needs while it's still over the hero. Most
- * heroes here are dark art, but Airbnb's is a white app screenshot — white on
- * white is invisible, and the pill has no glass until you've scrolled.
- */
-export default function BackLink({ heroInk = "light" }: { heroInk?: "light" | "dark" }) {
+export default function BackLink() {
   const [hidden, setHidden] = useState(false);
   const [onArt, setOnArt] = useState(true);
   const [scrolled, setScrolled] = useState(false);
@@ -56,10 +51,8 @@ export default function BackLink({ heroInk = "light" }: { heroInk?: "light" | "d
       href="/#works"
       className={styles.back}
       data-hidden={hidden || undefined}
-      /* A light hero gets the glass from the start: the pill has to sit on its
-         own ground when it's landing on app UI rather than on dark art. */
-      data-scrolled={scrolled || heroInk === "dark" || undefined}
-      data-ink={onArt ? (heroInk === "dark" ? "dark" : undefined) : "dark"}
+      data-scrolled={scrolled || undefined}
+      data-ink={onArt ? undefined : "dark"}
     >
       <span className={styles.backArrow} aria-hidden="true" />
       Back

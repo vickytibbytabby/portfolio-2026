@@ -16,16 +16,20 @@
   height: 100svh;
   overflow: hidden;
   background: linear-gradient(180deg, #000000 0%, #de403f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* full bleed. The recording already has the browser's own white card in it, so
-   framing it again put a rectangle inside a rectangle. */
+/* The demo sits in the gradient at about two thirds of the width. No radius and
+   no shadow of its own: the recording already carries the browser's white card,
+   and framing that again put a rectangle inside a rectangle. */
 .heroArt {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: calc(1020 * var(--pu));
+  max-width: 78%;
+  height: auto;
+  max-height: 70svh;
+  object-fit: contain;
   display: block;
 }
 
@@ -435,6 +439,12 @@
   .hero {
     height: 62svh;
     min-height: 340px;
+  }
+
+  .heroArt {
+    width: 88%;
+    max-width: none;
+    max-height: 74%;
   }
 
   .lede {
