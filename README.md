@@ -228,6 +228,19 @@ the art and flush to its bottom.
 
 ## Sub-pages
 
+**Scallion Studios** (`/work/scallion-studios`, Figma 109:2) is the second case
+study: a full-bleed scallions hero with the recipe app playing on a phone, the
+lede, two facts, the Instagram panel, a *Case study coming soon* line and the
+next-project row. It shares `components/BackLink.tsx` with the Arena Club page —
+that was lifted out of the case study when the second one needed it.
+
+The hero recording arrived as a phone on a flat grey backdrop. Rather than key
+the grey out, it's **cropped to the chassis** (the dark bezel measures 682 x 1445
+inside the 706-wide frame) and the corners are rounded off in CSS at the phone's
+own radius — 16.6% of its width, which is 7.82% of its height, so they come out
+circular. Nothing of the backdrop survives and there's no alpha channel to
+carry.
+
 Two long pages, both laid out in `--pu` — one design pixel, **width-derived and
 capped at 1px**. That differs from `--u` deliberately: `--u` also shrinks with
 viewport *height* so the homepage fits one screen, which would make a long

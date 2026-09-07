@@ -78,79 +78,12 @@
   display: block;
 }
 
-.back {
-  position: fixed;
-  z-index: 70;
-  /* the frame puts the ARROW at 48,48 — the pill's padding is pulled back out
-     so adding it didn't shift the mark */
-  left: calc(28 * var(--pu));
-  top: calc(36 * var(--pu));
-  display: inline-flex;
-  align-items: center;
-  gap: calc(12 * var(--pu));
-  padding: calc(12 * var(--pu)) calc(20 * var(--pu));
-  border-radius: 999px;
-  font-family: var(--hand);
-  font-size: calc(32 * var(--t) * var(--pu));
-  line-height: 1.25;
-  color: #ffffff;
-  transition:
-    color 220ms var(--ease),
-    background-color 260ms var(--ease),
-    box-shadow 260ms var(--ease),
-    backdrop-filter 260ms var(--ease),
-    opacity 260ms var(--ease),
-    translate 320ms var(--ease);
-}
 
-/* over the body rather than the hero art, where white would vanish */
-.back[data-ink="dark"] {
-  color: #111111;
-}
 
-/* The same liquid glass the homepage nav wears: at the top of the page it's
-   bare over the hero, and once you've scrolled it carries its own ground so it
-   never depends on what happens to be behind it. */
-.back[data-scrolled] {
-  background: color-mix(in srgb, var(--bg) 38%, transparent);
-  backdrop-filter: blur(10px) saturate(150%);
-  -webkit-backdrop-filter: blur(10px) saturate(150%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.55),
-    inset 0 0 0 1px rgba(0, 0, 0, 0.05),
-    0 4px 20px rgba(0, 0, 0, 0.07);
-}
 
-/* still on the hero art, which is dark — the glass inverts with the ink */
-.back[data-scrolled]:not([data-ink="dark"]) {
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-    0 4px 20px rgba(0, 0, 0, 0.22);
-}
 
-/* out of the way on the way down, back the moment you turn around */
-.back[data-hidden] {
-  opacity: 0;
-  translate: 0 calc(-24 * var(--pu));
-  pointer-events: none;
-}
 
-/* The hand-drawn arrow is filled white in the file, so it's painted as a mask
-   in currentColor — that's what lets the ink flip when it leaves the hero. */
-.backArrow {
-  width: calc(55 * var(--pu));
-  height: calc(25 * var(--pu));
-  background: currentColor;
-  -webkit-mask: url("/case/arena/back-arrow.svg") center / contain no-repeat;
-  mask: url("/case/arena/back-arrow.svg") center / contain no-repeat;
-  transition: translate 240ms var(--ease);
-}
 
-.back:hover .backArrow {
-  translate: calc(-8 * var(--pu)) 0;
-}
 
 /* ---- lede -------------------------------------------------------------- */
 
@@ -804,18 +737,9 @@
     object-fit: cover;
   }
 
-  .back {
-    left: calc(var(--gutter) - 14px);
-    top: calc(clamp(20px, 5vw, 32px) - 8px);
-    font-size: clamp(18px, 4.6vw, 22px);
-    gap: 8px;
-    padding: 8px 14px;
-  }
 
-  .backArrow {
-    width: 29px;
-    height: 13px;
-  }
+
+
 
   .lede {
     width: auto;

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import styles from "./case.module.css";
+import styles from "./BackLink.module.css";
 
 /** Roughly the arrow's own centre, in CSS px from the top of the window. */
 const PROBE_Y = 60;

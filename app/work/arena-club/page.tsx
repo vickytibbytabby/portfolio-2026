@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
-import BackLink from "./BackLink";
+import BackLink from "@/components/BackLink";
 import Lede from "./Lede";
 import ProjectTabs from "./ProjectTabs";
 import styles from "./case.module.css";
@@ -371,7 +371,7 @@ export default function ArenaClubCase() {
         </div>
 
         {/* ---- next ---- */}
-        <Link href="/#works" className={styles.next} data-reveal="">
+        <Link href="/work/scallion-studios" className={styles.next} data-reveal="">
           <span className={styles.nextThumb}>
             <img src="/case/arena/next-bg.webp" alt="" />
             <img className={styles.nextShot} src="/case/arena/next-shot.webp" alt="" />
