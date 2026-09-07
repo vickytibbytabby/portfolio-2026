@@ -30,8 +30,8 @@ const QUESTIONS = [
 ];
 
 const STATS = [
-  { n: "59%", of: "Airbnb users are aged 25–44", src: "Search Logistics" },
-  { n: "77%", of: "Guests say they choose airbnb to live like locals", src: "Search Logistics" },
+  { n: "59%", of: "of Airbnb users are 25–44", src: "Search Logistics" },
+  { n: "77%", of: "choose Airbnb to live like a local", src: "Search Logistics" },
 ];
 
 const QUOTES = [
@@ -70,17 +70,17 @@ const FINDINGS = [
   {
     n: "Finding 1",
     title: "The red color on the heat map reminds users of danger.",
-    body: "Red is often associated with danger, suggesting a need for a more intuitive gradient.",
+    body: "Red reads as danger. The gradient needed to say density, not risk.",
   },
   {
     n: "Finding 2",
     title: "The map looks visually cluttered.",
-    body: "The abundance of pins on the map made it hard to focus on specific interests like safety or food.",
+    body: "Too many pins at once. Nobody could focus on the one thing they cared about.",
   },
   {
     n: "Finding 3",
     title: "Information feels out of date.",
-    body: "Without real-time information or information about the distance from and to restaurants and attractions, users felt that the information was unreliable and out of date.",
+    body: "No live data and no distances, so people didn't trust what they were looking at.",
   },
 ];
 
@@ -88,19 +88,19 @@ const FEATURES = [
   {
     n: "Feature 01",
     title: "Local Insights Density Heatmap",
-    body: "This feature displays a heatmap of local attractions and eateries, guiding users to high-density neighborhoods for deeper exploration and informed stay decisions.",
+    body: "A heat map of local attractions and eateries, so you can see at a glance which neighbourhoods have something going on.",
     src: "feature-1",
   },
   {
     n: "Feature 02",
     title: "Insight Type Filter Categories",
-    body: "Introducing distinct categories such as dining, transportation, attractions, and safety to facilitate targeted and a visually simple interface.",
+    body: "Dining, transportation, attractions, safety — filter the map down to the one thing you're actually asking about.",
     src: "feature-2",
   },
   {
     n: "Feature 03",
     title: "Live Data and Navigational Map Directions",
-    body: "Enhanced exploration by integrating live crowd level data and providing mapped directions to each location.",
+    body: "Live crowd levels and directions to each place, so the information holds up on the day.",
     src: "feature-3",
   },
 ];
@@ -134,9 +134,8 @@ export default function AirbnbCase() {
 
         {/* ---- lede ---- */}
         <p className={styles.lede} data-reveal="">
-          Redesigning the Airbnb map feature to streamline user decision-making by
-          integrating accessible local insights, simplifying the search for the perfect
-          stay.
+          Redesigning Airbnb&rsquo;s map around local insights, so choosing where to stay
+          in a new city stops being guesswork.
         </p>
 
         {/* ---- facts ---- */}
@@ -154,20 +153,13 @@ export default function AirbnbCase() {
             <h2 className={styles.label}>Introduction</h2>
             <div className={styles.content}>
               <p>
-                Airbnb offers a vast selection of unique places to stay and things to do
-                worldwide, but finding the right fit can be tough, especially in new
-                cities. Travelers often struggle to match their needs with available
-                options, and the limited information can result in choices that don&rsquo;t
-                meet expectations.
+                Airbnb has a listing for everywhere. Finding the right one is the hard
+                part, especially in a city you don&rsquo;t know.
               </p>
               <p>
-                During my study abroad program in Singapore, I explored Southeast Asia,
-                visiting bucket-list destinations like Bali, Vietnam, and the Philippines
-                through Airbnb. Inspired by this experience, I embarked on a personal
-                passion project to redesign a key aspect of the Airbnb booking
-                process&mdash;the map feature. My aim was to streamline the decision-making
-                journey for users, enhancing the efficiency of selecting the perfect place
-                to stay.
+                While studying abroad in Singapore I travelled Southeast Asia on Airbnb —
+                Bali, Vietnam, the Philippines. Every booking came with the same guesswork,
+                so I took the map feature apart and rebuilt it.
               </p>
               <ul className={styles.photos}>
                 {TRAVEL.map((t) => (
@@ -185,19 +177,9 @@ export default function AirbnbCase() {
             <div className={styles.content}>
               <h3>Finding the right airbnb in a foreign city is hard.</h3>
               <p>
-                A key challenge I encountered during these trips was choosing the right
-                Airbnb when navigating foreign cities. Many questions regarding the
-                neighborhood of the Airbnb popped up in groupchats.
-              </p>
-              <p>
-                For guests, the primary concern is to make a decision that aligns with
-                their preferences and travel itineraries; the lack of information can lead
-                to a mismatch between expectation and reality.
-              </p>
-              <p>
-                For hosts, they may face the challenge of highlighting the unique
-                advantages of their location to attract potential guests. This is currently
-                done through a lengthy written description.
+                The same questions came up in every group chat, and the listing page never
+                answered them. Guests book on a guess. Hosts are left describing their
+                whole neighbourhood in a paragraph nobody reads.
               </p>
               <ul className={styles.chips}>
                 {QUESTIONS.map((q) => (
@@ -212,10 +194,8 @@ export default function AirbnbCase() {
             <div className={styles.content}>
               <h3>Users book through Airbnb for authentic local experiences.</h3>
               <p>
-                With Airbnb&rsquo;s younger audience seeking authentic local experiences,
-                the platform&rsquo;s current lack of detailed local insights limits
-                travelers&rsquo; ability to fully immerse with their destinations. Bridging
-                this information gap will enable users to choose the right airbnb for them.
+                People come to Airbnb to live somewhere rather than stay somewhere — and
+                then get almost nothing about the somewhere.
               </p>
               <ul className={styles.stats}>
                 {STATS.map((s) => (
@@ -234,15 +214,10 @@ export default function AirbnbCase() {
             <div className={styles.content}>
               <h3>There are two types of users: research-oriented and spontaneous.</h3>
               <p>
-                To gain deeper insights, I conducted five comprehensive interviews with
-                individuals aged between 25 and 44, all of whom have prior experience using
-                Airbnb.
-              </p>
-              <p>
-                The interviews revealed two main user profiles: <strong>Research-Oriented
-                Users</strong>, who use third-party platforms to gather information about
-                their Airbnb location, and <strong>Spontaneous Users</strong>, who tend to
-                book impulsively, often finding themselves in unexpected areas.
+                Five interviews, all Airbnb regulars aged 25 to 44. Two profiles came out
+                of them: <strong>research-oriented users</strong>, who go off to other apps
+                to vet a neighbourhood, and <strong>spontaneous users</strong>, who book on
+                instinct and find out where they are on arrival.
               </p>
               <ul className={styles.faces}>
                 {[1, 2, 3, 4].map((i) => (
@@ -267,13 +242,13 @@ export default function AirbnbCase() {
             <div className={styles.content}>
               <h3>Both types of users want better methods to look for local insights.</h3>
               <p>
-                To get a broader understanding of user perspectives, I carried out an online
-                survey with 200 participants to assess their preferences for local insights
-                and how these insights might influence their Airbnb booking choices.
+                Then a survey of 200 people. Only a third were happy with how they find
+                local information today, and most of them were doing it somewhere other
+                than Airbnb.
               </p>
               <div className={styles.pair}>
-                <img src="/case/airbnb/chart-satisfaction.webp" alt="Satisfaction with current methods: 36%" />
-                <img src="/case/airbnb/chart-methods.webp" alt="Current methods for finding local insights" />
+                <img className={styles.chart} src="/case/airbnb/chart-satisfaction.webp" alt="Satisfaction with current methods: 36%" />
+                <img className={styles.chart} src="/case/airbnb/chart-methods.webp" alt="Current methods for finding local insights" />
               </div>
             </div>
           </section>
@@ -283,10 +258,9 @@ export default function AirbnbCase() {
             <div className={styles.content}>
               <h3>Users want more information regarding neighborhoods in foreign cities.</h3>
               <p>
-                This affinity map revealed a significant gap in providing detailed local
-                insights. The insights gathered suggested solutions such as enhancing
-                Airbnb&rsquo;s map feature by offering local insights and real-time local
-                information to improve user experience and satisfaction.
+                Mapping it all out, one gap ran through everything: people want to know
+                what&rsquo;s around a listing, and the map is the obvious place to tell
+                them.
               </p>
               <img className={styles.figure} src="/case/airbnb/affinity.webp" alt="The affinity map of interview and survey notes" />
             </div>
@@ -300,27 +274,18 @@ export default function AirbnbCase() {
                 decision-making.
               </h3>
               <p>
-                My key design goal is to streamline Airbnb&rsquo;s interface and enrich it
-                with accessible local insights, simplifying the user decision-making
-                process, boosting platform engagement and satisfaction.
-              </p>
-              <p>
-                For guests, the aim is to enable faster and more efficient discovery of
-                suitable accommodations. For hosts, the focus is on improving property
-                visibility through enhanced functionalities and attracting guests whose
-                preferences align with what the property offers.
+                Put the local knowledge in the map itself: faster decisions for guests,
+                better-matched guests for hosts.
               </p>
               <div className={styles.pair}>
                 <div className={styles.impact}>
                   <h4>Business impact</h4>
                   <p>
-                    <strong>Increased user retention.</strong> Simplifying discovery with the
-                    map feature encourages users to stay longer and return, reducing
-                    drop-offs.
+                    <strong>Retention.</strong> An easier search keeps people looking rather
+                    than leaving.
                   </p>
                   <p>
-                    <strong>Revenue growth.</strong> Improved map engagement leads to more
-                    bookings, directly increasing Airbnb&rsquo;s earnings.
+                    <strong>Revenue.</strong> More time on the map means more bookings.
                   </p>
                 </div>
                 <div className={styles.impact}>
@@ -352,10 +317,8 @@ export default function AirbnbCase() {
                 ))}
               </ul>
               <p>
-                Based on user research and pain points, I chose approach 3,
-                &lsquo;Explorer Mode&rsquo;, to meet our users&rsquo; varied needs, from
-                planners to explorers. This feature uses a heat map to show the density of
-                local insights along with preview cards to browse images of the location.
+                Approach 3 won: a heat map of where the good stuff is, with preview cards to
+                browse it. It serves the planner and the improviser with the same screen.
               </p>
             </div>
           </section>
@@ -365,9 +328,8 @@ export default function AirbnbCase() {
             <div className={styles.content}>
               <h3>The Airbnb map feature is limited.</h3>
               <p>
-                Before starting my design process, I reviewed Airbnb&rsquo;s map feature and
-                identified shortcomings such as the non-interactive interface and scarce
-                information, making it hard for users to find suitable accommodations.
+                The map today barely responds and tells you almost nothing about where you
+                would be staying.
               </p>
               <img className={styles.figure} src="/case/airbnb/audit.webp" alt="An audit of the existing Airbnb map" />
             </div>
@@ -377,10 +339,7 @@ export default function AirbnbCase() {
             <h2 className={styles.label}>User testing</h2>
             <div className={styles.content}>
               <h3>Gaining feedback from the community.</h3>
-              <p>
-                To refine and improve the design, I conducted user testing with 5
-                participants, resulting in three key findings:
-              </p>
+              <p>Five people used the prototype. Three things came back:</p>
               <img className={styles.figure} src="/case/airbnb/testing.webp" alt="The tested prototype of Explorer Mode" />
               <ul className={styles.findings}>
                 {FINDINGS.map((f) => (
@@ -398,10 +357,7 @@ export default function AirbnbCase() {
             <h2 className={styles.label}>Final solutions</h2>
             <div className={styles.content}>
               <h3>Key features of &lsquo;Explorer Mode&rsquo;</h3>
-              <p>
-                Based on these findings, I created product solutions specific to the pain
-                points found during the user testing.
-              </p>
+              <p>Each one answers a finding.</p>
               {FEATURES.map((f) => (
                 <div key={f.n} className={styles.feature}>
                   <p className={styles.kicker}>{f.n}</p>
@@ -426,14 +382,11 @@ export default function AirbnbCase() {
             <h2 className={styles.label}>Measuring success</h2>
             <div className={styles.content}>
               <h3>Measuring results through &lsquo;Explorer Mode&rsquo;</h3>
-              <p>
-                Although I do not work at Airbnb, I&rsquo;m confident this idea could
-                succeed with proper validation and iteration. Success metrics could include:
-              </p>
+              <p>I don&rsquo;t work at Airbnb, so this is what I&rsquo;d watch:</p>
               <ul className={styles.metrics}>
-                <li># of bookings made directly from &lsquo;Explorer Mode&rsquo; map interactions</li>
-                <li># of users retained, comparing &lsquo;Explorer Mode&rsquo; users against non-map users</li>
-                <li># of hours users spend in the map feature with &lsquo;Explorer Mode&rsquo; compared to previous levels</li>
+                <li>Bookings that start with a map interaction</li>
+                <li>Retention of Explorer Mode users against everyone else</li>
+                <li>Time spent in the map, before and after</li>
               </ul>
             </div>
           </section>
@@ -442,11 +395,8 @@ export default function AirbnbCase() {
             <h2 className={styles.label}>Reflection</h2>
             <div className={styles.content}>
               <p>
-                As an active user of Airbnb, there were many features I wanted to explore and
-                address inspired by my travels in Southeast Asia. But ultimately I had to
-                scope it down to one problem to dive deeper on. This study was the result of
-                multiple rounds of problem definition and scoping of issues. Overall, the
-                process was both rewarding and personally meaningful.
+                I wanted to fix half the app. Scoping it down to one problem, over several
+                rounds, was most of the work — and the part I learned the most from.
               </p>
               <h4>For next time…</h4>
               <ul className={styles.metrics}>
@@ -455,11 +405,7 @@ export default function AirbnbCase() {
                 <li>Promote sustainable travel by highlighting eco-friendly options.</li>
               </ul>
               <h4>Moving forward…</h4>
-              <p>
-                My focus is on continuous improvement — gathering feedback, refining the
-                solution, and exploring new enhancements to better the Airbnb experience,
-                making every travel experience memorable.
-              </p>
+              <p>Keep testing it, keep cutting it back, keep travelling.</p>
               <h4>Travel bucket list</h4>
               <ul className={styles.photos}>
                 {BUCKET.map((b) => (

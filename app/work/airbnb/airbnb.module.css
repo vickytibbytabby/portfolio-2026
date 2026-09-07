@@ -123,11 +123,18 @@
   margin: 0;
 }
 
+/* A pill rather than a line of faint text: "Feature 01" reads as a marker for
+   what follows, not as another sentence in it. */
 .kicker {
+  align-self: flex-start;
+  padding: calc(7 * var(--pu)) calc(16 * var(--pu));
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.06);
   font-family: var(--hand);
-  font-size: calc(20 * var(--t) * var(--pu));
+  font-size: calc(19 * var(--t) * var(--pu));
+  line-height: 1.2;
   letter-spacing: 0.04em;
-  opacity: 0.5;
+  opacity: 0.75;
 }
 
 .figure {
@@ -255,11 +262,18 @@
   opacity: 0.55;
 }
 
+/* `stretch`, not `start`: the two impact cards have different amounts of copy
+   and were ending up at different heights next to each other. */
 .pair {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: calc(20 * var(--pu));
-  align-items: start;
+  align-items: stretch;
+}
+
+/* an image pair still sizes to its own art */
+.pair img {
+  align-self: start;
 }
 
 .pair img {
@@ -267,6 +281,11 @@
   height: auto;
   border-radius: calc(16 * var(--pu));
   display: block;
+}
+
+/* white artwork on a white page needs an edge of its own */
+.chart {
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .impact {
@@ -301,10 +320,12 @@
   display: block;
 }
 
+/* stacked, not three across: side by side each one was a narrow column of text
+   two or three words wide */
 .findings {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: calc(20 * var(--pu));
+  display: flex;
+  flex-direction: column;
+  gap: calc(16 * var(--pu));
   list-style: none;
   margin: 0;
   padding: 0;
@@ -314,7 +335,7 @@
   display: flex;
   flex-direction: column;
   gap: calc(8 * var(--pu));
-  padding: calc(24 * var(--pu));
+  padding: calc(28 * var(--pu));
   border-radius: calc(16 * var(--pu));
   background: #f3f3f3;
 }
@@ -474,9 +495,12 @@
   .stats,
   .quotes,
   .pair,
-  .ideas,
-  .findings {
+  .ideas {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .findings {
     gap: 14px;
   }
 
@@ -491,6 +515,10 @@
   .findings li {
     padding: 18px;
     border-radius: 12px;
+  }
+
+  .kicker {
+    padding: 5px 12px;
   }
 
   .stats strong {

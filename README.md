@@ -240,6 +240,10 @@ responsive images, so `currentSrc` at a 1512 viewport handed back 512-wide
 copies of charts whose originals are 2392 wide — they rendered visibly soft.
 Stripping the query string off each URL gets the source file.
 
+The copy is deliberately shorter than the Framer original — the research is the
+same, the sentences around it are not. The page lost about 950px of height in
+the trim.
+
 Its hero is the demo full-bleed. The recording already contains the browser's
 own white card, so framing it again put a rectangle inside a rectangle. That
 hero is also the one light one on the site, which is why `BackLink` takes a
