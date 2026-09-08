@@ -104,8 +104,7 @@ export default function TopNav() {
         <li>
           <a
             className={styles.link}
-            href="/resume.pdf"
-            type="application/pdf"
+            href="/resume"
             target="_blank"
             rel="noreferrer noopener"
           >

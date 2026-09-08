@@ -1,0 +1,51 @@
+.page {
+  max-width: 900px;
+  margin-inline: auto;
+  padding: calc(120 * var(--pu)) var(--gutter) calc(80 * var(--pu));
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--hand);
+  font-weight: 400;
+  font-size: clamp(28px, 3.4vw, 40px);
+  line-height: 1.2;
+}
+
+.download {
+  font-family: var(--hand);
+  font-size: clamp(16px, 1.8vw, 20px);
+  color: var(--muted);
+  transition: color 200ms var(--ease);
+}
+
+.download:hover {
+  color: var(--ink);
+}
+
+/* the page itself, as a sheet of paper */
+.sheet {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding-top: 96px;
+    gap: 14px;
+  }
+}
