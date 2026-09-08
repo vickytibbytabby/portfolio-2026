@@ -1,0 +1,10 @@
+# Vercel builds from source, so none of this needs uploading.
+node_modules
+.next
+.next-build
+.playwright-mcp
+.gstack
+.claude
+# one-off debug screenshots at the repo root
+/hero-1512.png
+/works-row1.png
