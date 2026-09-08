@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import BackLink from "@/components/BackLink";
+import CaseNav from "@/components/CaseNav";
 import SiteFooter from "@/components/SiteFooter";
 import styles from "./scallion.module.css";
 
@@ -76,24 +76,16 @@ export default function ScallionStudiosCase() {
           </p>
         </section>
 
-        {/* ---- next ---- */}
-        <Link href="/work/airbnb" className={styles.next} data-reveal="">
-          <span className={styles.nextThumb}>
-            <img src="/work-cards/airbnb-bg.webp" alt="" />
-            <img className={styles.nextShot} src="/work-cards/airbnb-content.webp" alt="" />
-          </span>
-          Next project: Airbnb, a Kleiner Perkins case study
-          <svg viewBox="0 0 54 23" aria-hidden="true" className={styles.nextArrow}>
-            <path
-              d="M1 11.5h51M52 11.5 42 2M52 11.5 42 21"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </Link>
+        <CaseNav
+          prev={{ href: "/work/arena-club", label: "Arena Club" }}
+          next={{
+            href: "/work/airbnb",
+            label: "Airbnb",
+            bg: "/work-cards/airbnb-bg.webp",
+            shot: "/work-cards/airbnb-content.webp",
+          }}
+        />
+
       </main>
 
       <SiteFooter />

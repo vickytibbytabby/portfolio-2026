@@ -151,30 +151,6 @@
   display: block;
 }
 
-/* ---- next -------------------------------------------------------------- */
-
-.next {
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  gap: calc(32 * var(--pu));
-  margin: calc(208 * var(--pu)) auto calc(124 * var(--pu));
-  font-family: var(--hand);
-  font-size: calc(32 * var(--t) * var(--pu));
-  line-height: 1.25;
-}
-
-.nextArrow {
-  width: calc(53.657 * var(--pu));
-  height: calc(22.963 * var(--pu));
-  flex: none;
-  transition: translate 240ms var(--ease);
-}
-
-.next:hover .nextArrow {
-  translate: calc(8 * var(--pu)) 0;
-}
-
 /* ---- phones ------------------------------------------------------------ */
 
 @media (max-width: 900px) {
@@ -246,17 +222,5 @@
 
   .figure {
     border-radius: 10px;
-  }
-
-  .next {
-    gap: 14px;
-    margin: clamp(48px, 12vw, 80px) auto clamp(48px, 12vw, 80px);
-    padding-inline: var(--gutter);
-    font-size: clamp(17px, 4.3vw, 21px);
-  }
-
-  .nextArrow {
-    width: 30px;
-    height: 13px;
   }
 }

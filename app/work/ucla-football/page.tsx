@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import BackLink from "@/components/BackLink";
+import CaseNav from "@/components/CaseNav";
 import SiteFooter from "@/components/SiteFooter";
 import styles from "./ucla.module.css";
 
@@ -96,20 +96,11 @@ export default function UclaFootballCase() {
           </section>
         </div>
 
-        {/* ---- next ---- */}
-        <Link href="/my-story" className={styles.next} data-reveal="">
-          My story
-          <svg viewBox="0 0 54 23" aria-hidden="true" className={styles.nextArrow}>
-            <path
-              d="M1 11.5h51M52 11.5 42 2M52 11.5 42 21"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </Link>
+        <CaseNav
+          prev={{ href: "/work/airbnb", label: "Airbnb" }}
+          next={{ href: "/my-story", label: "My story" }}
+        />
+
       </main>
 
       <SiteFooter />

@@ -126,68 +126,6 @@
   color: var(--muted);
 }
 
-/* ---- next project ------------------------------------------------------ */
-
-.next {
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  gap: calc(32 * var(--pu));
-  margin: calc(72 * var(--pu)) auto calc(124 * var(--pu));
-  font-family: var(--hand);
-  font-size: calc(32 * var(--t) * var(--pu));
-  line-height: 1.25;
-}
-
-.nextThumb {
-  position: relative;
-  display: block;
-  width: calc(114.639 * var(--pu));
-  height: calc(134.116 * var(--pu));
-  border-radius: calc(20 * var(--pu));
-  overflow: hidden;
-  rotate: 4.34deg;
-  flex: none;
-  transition: rotate 300ms var(--ease), scale 300ms var(--ease);
-}
-
-.nextThumb img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Airbnb's art is a landscape browser window, so it sits across the middle of
-   the portrait thumb rather than filling it. Qualified by the parent, or the
-   `.nextThumb img` rule above out-specifies it and the shot fills the box. */
-.nextThumb .nextShot {
-  inset: auto;
-  left: 8%;
-  top: 50%;
-  width: 84%;
-  height: auto;
-  translate: 0 -50%;
-  object-fit: contain;
-}
-
-.nextArrow {
-  width: calc(53.657 * var(--pu));
-  height: calc(22.963 * var(--pu));
-  flex: none;
-  transition: translate 240ms var(--ease);
-}
-
-.next:hover .nextThumb {
-  rotate: 0deg;
-  scale: 1.06;
-}
-
-.next:hover .nextArrow {
-  translate: calc(8 * var(--pu)) 0;
-}
-
 /* ---- phones ------------------------------------------------------------ */
 
 @media (max-width: 900px) {
@@ -247,23 +185,5 @@
 
   .soon {
     font-size: clamp(17px, 4.4vw, 21px);
-  }
-
-  .next {
-    gap: 14px;
-    margin: clamp(40px, 10vw, 64px) auto clamp(48px, 12vw, 80px);
-    padding-inline: var(--gutter);
-    font-size: clamp(17px, 4.3vw, 21px);
-  }
-
-  .nextThumb {
-    width: 58px;
-    height: 68px;
-    border-radius: 10px;
-  }
-
-  .nextArrow {
-    width: 30px;
-    height: 13px;
   }
 }

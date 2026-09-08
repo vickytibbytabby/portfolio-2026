@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import BackLink from "@/components/BackLink";
+import CaseNav from "@/components/CaseNav";
 import SiteFooter from "@/components/SiteFooter";
 import styles from "./airbnb.module.css";
 
@@ -411,24 +411,16 @@ export default function AirbnbCase() {
           </section>
         </div>
 
-        {/* ---- next ---- */}
-        <Link href="/work/ucla-football" className={styles.next} data-reveal="">
-          <span className={styles.nextThumb}>
-            <img src="/work-cards/ucla-football-bg.webp" alt="" />
-            <img className={styles.nextShot} src="/work-cards/ucla-football-art.webp" alt="" />
-          </span>
-          Next project: UCLA Football new recruits illustration
-          <svg viewBox="0 0 54 23" aria-hidden="true" className={styles.nextArrow}>
-            <path
-              d="M1 11.5h51M52 11.5 42 2M52 11.5 42 21"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </Link>
+        <CaseNav
+          prev={{ href: "/work/scallion-studios", label: "Scallion Studios" }}
+          next={{
+            href: "/work/ucla-football",
+            label: "UCLA Football",
+            bg: "/work-cards/ucla-football-bg.webp",
+            shot: "/work-cards/ucla-football-art.webp",
+          }}
+        />
+
       </main>
 
       <SiteFooter />

@@ -406,6 +406,16 @@ deployed. Worth confirming your licence covers web use before going live.
 
 ## Behaviour notes
 
+Every case study ends with `components/CaseNav.tsx`: where you came from on the
+left, where you're going on the right. Arena Club has nothing behind it, so
+`prev` is optional and an empty span holds the left slot — `next` keeps its own
+side rather than drifting into the middle. The chain runs Arena Club ->
+Scallion Studios -> Airbnb -> UCLA Football -> My story.
+
+The "Previous:" / "Next:" kickers are dimmed with a **colour**, not an opacity
+on the wrapper: a child can't be less transparent than its parent, so fading the
+label faded the project name with it.
+
 - **Nav** is a pill centred 20px from the top of the window. Unscrolled it's
   bare text; past 24px of scroll it gains liquid glass — a light blur of what's
   behind, a hairline rim and a bright inner top edge. The blur is deliberately

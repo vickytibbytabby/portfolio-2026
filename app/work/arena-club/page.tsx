@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import BackLink from "@/components/BackLink";
+import CaseNav from "@/components/CaseNav";
 import Lede from "./Lede";
 import ProjectTabs from "./ProjectTabs";
 import styles from "./case.module.css";
@@ -370,24 +370,15 @@ export default function ArenaClubCase() {
           />
         </div>
 
-        {/* ---- next ---- */}
-        <Link href="/work/scallion-studios" className={styles.next} data-reveal="">
-          <span className={styles.nextThumb}>
-            <img src="/case/arena/next-bg.webp" alt="" />
-            <img className={styles.nextShot} src="/case/arena/next-shot.webp" alt="" />
-          </span>
-          Next project: Scallion Studios recipe app
-          <svg viewBox="0 0 54 23" aria-hidden="true" className={styles.nextArrow}>
-            <path
-              d="M1 11.5h51M52 11.5 42 2M52 11.5 42 21"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </Link>
+        <CaseNav
+          next={{
+            href: "/work/scallion-studios",
+            label: "Scallion Studios",
+            bg: "/case/arena/next-bg.webp",
+            shot: "/case/arena/next-shot.webp",
+          }}
+        />
+
       </main>
 
       <SiteFooter />

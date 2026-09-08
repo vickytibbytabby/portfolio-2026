@@ -1,0 +1,124 @@
+/* Previous on the left, next on the right, on the case studies' own measure. */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(32 * var(--pu));
+  padding-inline: calc(200 * var(--pu));
+  margin: calc(120 * var(--pu)) auto calc(124 * var(--pu));
+  font-family: var(--hand);
+  font-size: calc(32 * var(--t, 1) * var(--pu));
+  line-height: 1.25;
+}
+
+.prev,
+.next {
+  display: flex;
+  align-items: center;
+  gap: calc(20 * var(--pu));
+  max-width: 46%;
+}
+
+.next {
+  text-align: right;
+}
+
+/* The project's own name carries the emphasis. This has to be a colour rather
+   than an opacity on the wrapper — a child can't be less transparent than its
+   parent, so fading the whole label faded the name with it. */
+.kicker {
+  color: var(--muted);
+  transition: color 200ms var(--ease);
+}
+
+.prev:hover .kicker,
+.next:hover .kicker {
+  color: var(--ink);
+}
+
+.prevArrow,
+.nextArrow {
+  width: calc(53.657 * var(--pu));
+  height: calc(22.963 * var(--pu));
+  flex: none;
+  transition: translate 240ms var(--ease);
+}
+
+.prev:hover .prevArrow {
+  translate: calc(-8 * var(--pu)) 0;
+}
+
+.next:hover .nextArrow {
+  translate: calc(8 * var(--pu)) 0;
+}
+
+.thumb {
+  position: relative;
+  display: block;
+  width: calc(114.639 * var(--pu));
+  height: calc(134.116 * var(--pu));
+  border-radius: calc(20 * var(--pu));
+  overflow: hidden;
+  rotate: 4.34deg;
+  flex: none;
+  transition: rotate 300ms var(--ease), scale 300ms var(--ease);
+}
+
+.thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* a landscape shot sits across the middle of the portrait thumb */
+.thumb .shot {
+  inset: auto;
+  left: 8%;
+  top: 50%;
+  width: 84%;
+  height: auto;
+  translate: 0 -50%;
+  object-fit: contain;
+}
+
+.next:hover .thumb {
+  rotate: 0deg;
+  scale: 1.06;
+}
+
+@media (max-width: 900px) {
+  .nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(16px, 4vw, 24px);
+    padding-inline: var(--gutter);
+    margin: clamp(48px, 12vw, 80px) auto clamp(48px, 12vw, 80px);
+    font-size: clamp(17px, 4.3vw, 21px);
+  }
+
+  /* stacked, so each one takes the full width and reads left to right */
+  .prev,
+  .next {
+    max-width: none;
+    gap: 12px;
+  }
+
+  .next {
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .prevArrow,
+  .nextArrow {
+    width: 30px;
+    height: 13px;
+  }
+
+  .thumb {
+    width: 58px;
+    height: 68px;
+    border-radius: 10px;
+  }
+}
