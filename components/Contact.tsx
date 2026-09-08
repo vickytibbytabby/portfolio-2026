@@ -31,7 +31,9 @@ export default function Contact() {
               className={styles.link}
               href={link.href}
               {...(external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
-              {...(link.href.endsWith(".pdf") ? { download: "" } : {})}
+              {...(link.href.endsWith(".pdf")
+                ? { download: "Vicky Jen Resume.pdf", type: "application/pdf" }
+                : {})}
             >
               {link.label}
             </a>

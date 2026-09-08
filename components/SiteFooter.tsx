@@ -26,7 +26,9 @@ export default function SiteFooter() {
               {...(l.href.startsWith("http")
                 ? { target: "_blank", rel: "noreferrer noopener" }
                 : {})}
-              {...(l.href.endsWith(".pdf") ? { download: "" } : {})}
+              {...(l.href.endsWith(".pdf")
+                ? { download: "Vicky Jen Resume.pdf", type: "application/pdf" }
+                : {})}
             >
               {l.label}
             </a>

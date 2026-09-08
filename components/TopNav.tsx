@@ -102,7 +102,12 @@ export default function TopNav() {
 
         {/* sits with the rest but isn't a page — it leaves the site */}
         <li>
-          <a className={styles.link} href="/resume.pdf" download>
+          <a
+            className={styles.link}
+            href="/resume.pdf"
+            type="application/pdf"
+            download="Vicky Jen Resume.pdf"
+          >
             Resume
           </a>
         </li>
