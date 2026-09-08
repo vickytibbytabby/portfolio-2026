@@ -124,14 +124,15 @@ export const WORK: WorkCard[] = [
   {
     background: "linear-gradient(180deg, #040617 0%, #040617 62.52%, #188fff 100%)",
     href: "/work/arena-club",
-    video: {
-      kind: "phone",
-      src: "/work-cards/arena-club.mp4",
-      poster: "/work-cards/arena-club-poster.webp",
-      // the Figma has a still here; the recording is the same phone, so it
-      // takes the still's box exactly — y 76.69, 743.70 tall, in the 897 box
+    // The Figma's own still, back in place of the recording. Its box is the one
+    // the recording took: y 76.69, 743.70 tall in the 897 stage, and the width
+    // follows the phone's own 569 x 1116.
+    art: {
+      src: "/work-cards/arena-club-home.webp",
       top: 8.5496,
-      height: 82.91,
+      width: 52.9583,
+      ratio: 569 / 1116,
+      img: { left: 0, top: 0, width: 100, height: 100 },
     },
     mark: {
       src: "/work-cards/arena-club-badge.webp",
@@ -141,7 +142,7 @@ export const WORK: WorkCard[] = [
     },
     mobile: {
       // the still's box is y 58.28, 348.00 tall, in the 423.5 box
-      video: { top: 13.7615, height: 82.1723 },
+      art: { top: 13.7615, width: 49.0138 },
       mark: { top: 2.0047, width: 12.14 },
     },
     backdrop: [0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.027, 0.039, 0.059, 0.078, 0.098, 0.118, 0.138, 0.157, 0.177, 0.197, 0.217, 0.236, 0.256, 0.276, 0.296, 0.315, 0.335, 0.355, 0.375, 0.394, 0.414, 0.434, 0.454, 0.474, 0.493],

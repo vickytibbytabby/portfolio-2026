@@ -1,0 +1,88 @@
+/* The gate the middleware rewrites to when there's no valid cookie. */
+.page {
+  min-height: 72svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(20 * var(--pu));
+  padding: calc(160 * var(--pu)) var(--gutter) calc(80 * var(--pu));
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--hand);
+  font-weight: 400;
+  font-size: clamp(30px, 4.6vw, 56px);
+  line-height: 1.2;
+}
+
+.note {
+  max-width: 46ch;
+  margin: 0;
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.form {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  margin-top: calc(12 * var(--pu));
+}
+
+.input {
+  width: min(280px, 58vw);
+  padding: 12px 18px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 999px;
+  background: var(--bg);
+  font: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  transition: border-color 200ms var(--ease);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+
+.button {
+  appearance: none;
+  border: 0;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--hand);
+  font-size: 18px;
+  transition: opacity 200ms var(--ease);
+}
+
+.button:hover {
+  opacity: 0.82;
+}
+
+.button:disabled {
+  opacity: 0.5;
+}
+
+/* holds its line so the form doesn't jump when the message appears */
+.error {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  font-size: 15px;
+  color: #c0392b;
+  opacity: 0;
+  transition: opacity 200ms var(--ease);
+}
+
+.error[data-show] {
+  opacity: 1;
+}
