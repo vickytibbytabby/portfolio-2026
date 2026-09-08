@@ -452,9 +452,9 @@ label faded the project name with it.
   computed from their gradient stops rather than sampled — gamma-encoded Rec.709
   luma on the sRGB bytes, which is what the 0.42 threshold is calibrated to.
 
-  The `Resume` item points at `/resume.pdf`, which saves rather than opening in
-  a tab — `download` is set wherever a link ends in `.pdf`, so the nav and both
-  footers agree without repeating themselves.
+  The `Resume` item points at `/resume.pdf` and opens in a new tab. A `.pdf`
+  href counts as external in all three places that link to it, so the nav and
+  both footers agree without repeating themselves.
 - **A first landing is covered until the page is ready.** `components/BootLoader.tsx`
   renders a cover in the *first paint* — it's a server-rendered client component,
   so it's in the HTML rather than appearing a moment later — and lifts once the

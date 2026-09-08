@@ -106,7 +106,8 @@ export default function TopNav() {
             className={styles.link}
             href="/resume.pdf"
             type="application/pdf"
-            download="Vicky Jen Resume.pdf"
+            target="_blank"
+            rel="noreferrer noopener"
           >
             Resume
           </a>

@@ -3,7 +3,7 @@ import styles from "./Contact.module.css";
 
 const EMAIL = "vickyyjen@gmail.com";
 
-/** The resume is a download; the rest open. */
+/** Everything here opens in a new tab — the resume included. */
 const LINKS = [
   { label: "Email", href: `mailto:${EMAIL}` },
   { label: "Resume", href: "/resume.pdf" },
@@ -24,16 +24,14 @@ export default function Contact() {
         style={{ "--reveal-delay": "90ms" } as CSSProperties}
       >
         {LINKS.map((link) => {
-          const external = link.href.startsWith("http");
+          const external = link.href.startsWith("http") || link.href.endsWith(".pdf");
           return (
             <a
               key={link.label}
               className={styles.link}
               href={link.href}
               {...(external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
-              {...(link.href.endsWith(".pdf")
-                ? { download: "Vicky Jen Resume.pdf", type: "application/pdf" }
-                : {})}
+              {...(link.href.endsWith(".pdf") ? { type: "application/pdf" } : {})}
             >
               {link.label}
             </a>
